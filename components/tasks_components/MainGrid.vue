@@ -50,29 +50,31 @@ export default {
       .get()
       .then((info) => {
         if (info.data()) this.permissions = info.data().permissions
+        this.$store.commit('setPermissions', this.permissions)
       })
+
     this.$fire.firestore
       .collection('users')
       .doc(this.$fire.auth.currentUser.email)
       .collection('tasks')
       .orderBy('end_date', 'asc')
-      .get()
-      .then((snapshot) => {
-        const tasks = []
-        snapshot.docs.forEach((doc) => {
-          tasks.push(doc.data())
-        })
-        this.$store.commit('setTasks', tasks)
-        this.tasks = this.$store.getters.getTasks
+      .onSnapshot(
+        (snapshot) => {
+          const tasks = []
+          snapshot.docs.forEach((doc) => {
+            tasks.push(doc.data())
+          })
+          this.$store.commit('setTasks', tasks)
+          this.tasks = this.$store.getters.getTasks
 
-        this.isLoaded = true
-        this.segregationTasks()
-        // console.log(this.tasks)
-      })
-      .catch((err) => {
-        this.isError = true
-        console.log(err)
-      })
+          this.isLoaded = true
+          this.taskGroup = []
+          this.segregationTasks()
+        },
+        (error) => {
+          console.log(error)
+        }
+      )
   },
   methods: {
     segregationTasks() {
@@ -116,4 +118,30 @@ export default {
   position: relative;
   top: -30px;
 }
+
+/* Old code to get data  
+this.$fire.firestore
+      .collection('users')
+      .doc(this.$fire.auth.currentUser.email)
+      .collection('tasks')
+      .orderBy('end_date', 'asc')
+      .get()
+      .then((snapshot) => {
+        const tasks = []
+        snapshot.docs.forEach((doc) => {
+          tasks.push(doc.data())
+        })
+        this.$store.commit('setTasks', tasks)
+        this.$store.commit('setPermissions', this.permissions)
+        console.log(this.permissions)
+        this.tasks = this.$store.getters.getTasks
+
+        this.isLoaded = true
+        this.segregationTasks()
+        // console.log(this.tasks)
+      })
+      .catch((err) => {
+        this.isError = true
+        console.log(err)
+      }) */
 </style>

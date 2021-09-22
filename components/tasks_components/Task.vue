@@ -35,7 +35,36 @@ export default {
   methods: {
     CompleteTask() {
       console.log('Ukończono zadnie!')
+      console.log(this.task.id)
       this.hidden = true
+
+      this.$fire.firestore
+        .collection('users')
+        .doc(this.$fire.auth.currentUser.email)
+        .collection('tasks')
+        .get()
+        .then((snapshot) => {
+          const singleTask = snapshot.docs.find(
+            (doc) => doc.data().id === this.task.id
+          )
+          return singleTask
+        })
+        .then((serachUser) => {
+          console.log(serachUser)
+          this.$fire.firestore
+            .collection('users')
+            .doc(this.$fire.auth.currentUser.email)
+            .collection('tasks')
+            .doc(serachUser.id)
+            .delete()
+            .then(console.log('Usunięto', serachUser.id, serachUser.header))
+            .catch((err) => {
+              console.log(err)
+            })
+        })
+        .catch((err) => {
+          console.log(err)
+        })
       // this.classList.add('done')
     },
   },
