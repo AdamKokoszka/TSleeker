@@ -1,0 +1,49 @@
+<template>
+  <div class="col">
+    <Date :num-day="numDay" :num-month="numMonth" :day-of-week="dayOfWeek" />
+    <div class="task_con">
+      <div v-for="(task, index) in taskAsADay" :key="index">
+        <Task :task="task" />
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+export default {
+  props: {
+    numDay: {
+      type: Number,
+      default: 0,
+    },
+    numMonth: {
+      type: Number,
+      default: 0,
+    },
+    dayOfWeek: {
+      type: Number,
+      default: 0,
+    },
+    taskAsADay: {
+      type: Array,
+      default: () => {},
+    },
+  },
+  data() {
+    return {}
+  },
+}
+</script>
+<style scoped>
+.col {
+  height: 100%;
+  border-right: 1px solid var(--color-gray-light);
+  border-left: 1px solid var(--color-gray-light);
+  transition: 0.3s;
+  cursor: pointer;
+  padding: 0 13px;
+  padding-bottom: 20px;
+}
+.col:hover {
+  background-color: var(--color-gray-light);
+}
+</style>

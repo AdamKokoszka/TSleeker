@@ -1,0 +1,119 @@
+<template>
+  <transition name="view" appear>
+    <div v-if="isLoaded && !isError" class="board_con">
+      <div v-for="(item, index) in colmunCount" :key="index" class="col_for">
+        <Column
+          :num-day="currentDate.getDate() + item - 1"
+          :num-month="currentDate.getMonth()"
+          :day-of-week="currentDate.getDay() + item - 1"
+          :task-as-a-day="taskGroup[index]"
+        />
+      </div>
+    </div>
+    <div v-else-if="isError" class="board_con">
+      <div class="loading_con">
+        <img src="~/assets/loading.svg" />
+        <h3>Problem z poprawniem danych...</h3>
+      </div>
+    </div>
+    <div v-else class="board_con">
+      <div class="loading_con">
+        <img src="~/assets/loading.svg" />
+        <h3>Ładowanie...</h3>
+      </div>
+    </div>
+  </transition>
+</template>
+<script>
+export default {
+  data() {
+    return {
+      currentDate: new Date(),
+      colmunCount: 7,
+      isLoaded: false,
+      isError: false,
+      tasks: [],
+      taskGroup: [],
+      entered_name: '',
+      permissions: '',
+      newUser: {
+        name: '',
+        email: '',
+        password: '',
+      },
+    }
+  },
+  mounted() {
+    this.$fire.firestore
+      .collection('users')
+      .doc(this.$fire.auth.currentUser.email)
+      .get()
+      .then((info) => {
+        if (info.data()) this.permissions = info.data().permissions
+      })
+    this.$fire.firestore
+      .collection('users')
+      .doc(this.$fire.auth.currentUser.email)
+      .collection('tasks')
+      .orderBy('end_date', 'asc')
+      .get()
+      .then((snapshot) => {
+        const tasks = []
+        snapshot.docs.forEach((doc) => {
+          tasks.push(doc.data())
+        })
+        this.$store.commit('setTasks', tasks)
+        this.tasks = this.$store.getters.getTasks
+
+        this.isLoaded = true
+        this.segregationTasks()
+        // console.log(this.tasks)
+      })
+      .catch((err) => {
+        this.isError = true
+        console.log(err)
+      })
+  },
+  methods: {
+    segregationTasks() {
+      for (let i = 0; i < this.colmunCount; i++) {
+        const findTasks = this.tasks.filter((task) => {
+          const taskDateSlice = new Date(task.end_date.seconds * 1000)
+            .toString()
+            .slice(0, 10)
+          const dayCount = 86400000 * i // One day * count day after today
+          const currentDate = new Date(this.currentDate.getTime() + dayCount)
+            .toString()
+            .slice(0, 10)
+          if (taskDateSlice === currentDate) return true
+          return false
+        })
+
+        // Push Array of task to data()
+        this.taskGroup.push(findTasks)
+      }
+    },
+  },
+}
+</script>
+<style scoped>
+.board_con {
+  display: flex;
+  flex: 1;
+  width: 100%;
+}
+.col_for {
+  width: 300px;
+}
+.loading_con {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.loading_con h3 {
+  position: relative;
+  top: -30px;
+}
+</style>
