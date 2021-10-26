@@ -2,21 +2,29 @@
   box-sizing: border-box;
 }
 :root {
-  --color-gray-light: #f3f4f6;
-  --color-gray-dark: rgb(41, 41, 41);
+  /* --color-gray-light: #f3f4f6; */
+  --color-gray-light: #ededed;
+  --color-gray-dark: #292929;
   --color-green-dark: #059669;
+  --color-blue-dark: #0f52ba;
+  --color-blue-light: #437edb;
+  /* --color-blue-lighter: #edf3ff; */
+  --color-blue-lighter: #dbe7ff;
+  --color-red-light: #ee3434;
+  /* --color-red-lighter: #ffecec; */
+  --color-red-lighter: #ffd1d1;
 
-  --color-task-1: #84e3c8;
+  /* --color-task-1: #84e3c8;
   --color-task-2: #a8e6cf;
   --color-task-3: #dcedc1;
   --color-task-4: #ffd3b6;
   --color-task-5: #ffaaa5;
   --color-task-6: #ff8b94;
-  --color-task-7: #ff7480;
+  --color-task-7: #ff7480; */
 }
 
 ::selection {
-  background: var(--color-task-1);
+  background: #84e3c8;
 }
 
 html {
@@ -39,6 +47,10 @@ p {
   margin: 0;
   color: var(--color-gray-dark);
 }
+.green_header {
+  text-align: center;
+  color: var(--color-green-dark);
+}
 .con_main {
   width: 1200px;
   margin-left: auto;
@@ -50,11 +62,22 @@ a {
 
 .fade_in_out-enter-active,
 .fade_in_out-leave-active {
-  transition: opacity 0.5s;
+  transition: opacity 0.3s;
 }
 .fade_in_out-enter,
 .fade_in_out-leave-to {
   opacity: 0;
+  /* transform: rotateX(90deg); */
+}
+.fade_slide_in_out-enter-active,
+.fade_slide_in_out-leave-active {
+  transition: 0.3s;
+  transform: translateY(0);
+}
+.fade_slide_in_out-enter,
+.fade_slide_in_out-leave-to {
+  opacity: 0;
+  transform: translateY(10%);
 }
 
 .button_green {
@@ -90,25 +113,52 @@ a {
   position: relative;
   z-index: 10;
 }
-.form_main .header1 {
+.header1 {
   font-size: 28px;
   text-align: center;
   margin-bottom: 20px;
 }
 
-.form_main input {
+.form_main input,
+.form_main textarea {
   display: block;
   width: 100%;
-  padding: 10px;
+  padding: 8px;
   font-size: 18px;
   border-radius: 5px;
   margin-bottom: 10px;
   border-color: transparent;
+  font-family: 'Lato', sans-serif;
+  border: 2px solid #fff;
 }
 .form_main input:active,
-.form_main input:focus {
+.form_main input:focus,
+.form_main textarea:active,
+.form_main textarea:focus,
+.form_main select:active,
+.form_main select:focus {
   outline: none;
   border: 2px solid var(--color-green-dark);
+  color: var(--color-gray-dark);
+}
+.form_main select {
+  position: relative;
+  width: 100%;
+  padding: 8px;
+  font-size: 18px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  border-color: transparent;
+  font-family: 'Lato', sans-serif;
+  border: none;
+  outline: transparent;
+  -moz-appearance: none; /* Firefox */
+  -webkit-appearance: none; /* Safari and Chrome */
+  appearance: none;
+  border: 2px solid #fff;
+  background: #fff url(~assets/arrow_bottom.png) no-repeat;
+  background-position: center right 12px;
+  color: #757575;
 }
 
 .form_main .error {

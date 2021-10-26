@@ -1,4 +1,8 @@
 export default {
+  // server: {
+  //   port: 8000, // default: 3000
+  //   host: '0.0.0.0', // default: localhost
+  // }, // other configs
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 
@@ -35,8 +39,10 @@ export default {
       '~/components',
       '~/components/layout_components',
       '~/components/tasks_components',
+      '~/components/tasks_components/single_task',
       '~/components/global_layouts',
       '~/components/auth',
+      '~/components/popups',
     ],
   },
 

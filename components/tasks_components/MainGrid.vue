@@ -34,6 +34,7 @@ export default {
       isError: false,
       tasks: [],
       taskGroup: [],
+      retrivealTasks: [],
       entered_name: '',
       permissions: '',
       newUser: {
@@ -62,11 +63,13 @@ export default {
         (snapshot) => {
           const tasks = []
           snapshot.docs.forEach((doc) => {
-            tasks.push(doc.data())
+            const docObject = doc.data()
+            docObject.id = doc.id
+            tasks.push(docObject)
           })
           this.$store.commit('setTasks', tasks)
           this.tasks = this.$store.getters.getTasks
-
+          // console.log('taski: ', this.tasks)
           this.isLoaded = true
           this.taskGroup = []
           this.segregationTasks()
@@ -75,6 +78,8 @@ export default {
           console.log(error)
         }
       )
+
+    this.$store.dispatch('getTeamMembers')
   },
   methods: {
     segregationTasks() {
@@ -94,6 +99,23 @@ export default {
         // Push Array of task to data()
         this.taskGroup.push(findTasks)
       }
+      this.retrievalDelayedTasks()
+    },
+    retrievalDelayedTasks() {
+      const retrivealTasks = this.tasks.filter((task) => {
+        const taskDateSlice = new Date(task.end_date.seconds * 1000)
+          .toString()
+          .slice(8, 10)
+        const currentDate = new Date(this.currentDate.getTime())
+          .toString()
+          .slice(8, 10)
+        if (taskDateSlice < currentDate) return true
+        return false
+      })
+      retrivealTasks.forEach((singleRetriveal) => {
+        singleRetriveal.delay = true
+        this.taskGroup[0].unshift(singleRetriveal)
+      })
     },
   },
 }

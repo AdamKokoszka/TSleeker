@@ -10,37 +10,7 @@
       >
         Wyloguj
       </button>
-      <button
-        v-if="$store.getters.getPermissions == 'admin'"
-        class="button_green button_green_small"
-        @click="showPopup = !showPopup"
-      >
-        Dodaj zadanie
-      </button>
-      <transition name="fade_in_out">
-        <div
-          v-if="showPopup && $store.getters.getPermissions == 'admin'"
-          class="add_task_con"
-        >
-          <CenterContainer>
-            <form class="form_main" @submit.prevent="addTask">
-              <input
-                v-model="taskData.header"
-                type="text"
-                placeholder="Nagłówek"
-              />
-              <input
-                v-model="taskData.description"
-                type="text"
-                placeholder="Opis"
-              />
-              <input v-model="taskData.end_date" type="date" />
-              <input v-model="taskData.id" type="number" placeholder="id" />
-              <button type="submit" class="button_green">Dodaj zadanie!</button>
-            </form>
-          </CenterContainer>
-        </div>
-      </transition>
+      <AddTask></AddTask>
     </div>
   </div>
 </template>

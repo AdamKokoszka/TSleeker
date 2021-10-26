@@ -1,13 +1,15 @@
 <template>
-  <div class="col">
+  <div :class="{ col: true, color_week: isWeekend }">
     <Date :num-day="numDay" :num-month="numMonth" :day-of-week="dayOfWeek" />
     <div v-if="taskAsADay.length <= 0" class="task_con">
       <p class="empty_task">Brak zadań na ten dzień...</p>
     </div>
     <div v-else class="task_con">
+      <!-- <transition-group name="fade_in_out"> -->
       <div v-for="(task, index) in taskAsADay" :key="index">
         <Task :task="task" />
       </div>
+      <!-- </transition-group> -->
     </div>
   </div>
 </template>
@@ -34,6 +36,12 @@ export default {
   data() {
     return {}
   },
+  computed: {
+    isWeekend() {
+      if (this.dayOfWeek % 7 === 0 || this.dayOfWeek % 7 === 6) return true
+      return false
+    },
+  },
 }
 </script>
 <style scoped>
@@ -46,11 +54,14 @@ export default {
   padding-bottom: 20px;
 }
 .col:hover {
-  background-color: var(--color-gray-light);
+  /* background-color: var(--color-gray-light); */
 }
 .empty_task {
   text-align: center;
   opacity: 0.5;
   font-size: 15px;
+}
+.color_week {
+  background-color: #e1e1e1;
 }
 </style>
