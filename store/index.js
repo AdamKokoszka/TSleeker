@@ -1,9 +1,22 @@
-const state = () => ({
-  user: null,
-  tasks: [],
-  permissions: '',
-  members: [],
-})
+// const state = () => ({
+//   user: null,
+//   tasks: [],
+//   permissions: '',
+//   members: [],
+//   adminsAccount: [],
+// })
+
+const getDefaultState = () => {
+  return {
+    user: null,
+    tasks: [],
+    permissions: '',
+    members: [],
+    adminsAccount: [],
+  }
+}
+
+const state = getDefaultState()
 
 const getters = {
   getUser(state) {
@@ -18,6 +31,9 @@ const getters = {
   getMembers(state) {
     return state.members
   },
+  getAdmins(state) {
+    return state.adminsAccount
+  },
 }
 
 const mutations = {
@@ -30,8 +46,16 @@ const mutations = {
   setMembers(state, members) {
     state.members = members
   },
+  setAdmins(state, admins) {
+    state.adminsAccount = admins
+  },
   setPermissions(state, permissions) {
     state.permissions = permissions
+  },
+  resetState(state) {
+    // Merge rather than replace so we don't lose observers
+    // https://github.com/vuejs/vuex/issues/1118
+    Object.assign(state, getDefaultState())
   },
 }
 
@@ -80,7 +104,7 @@ const actions = {
         console.log(err)
       })
   },
-  getTeamMembers(state, taskId) {
+  getTeamMembers({ commit, getters }, taskId) {
     this.$fire.firestore
       .collection('users')
       .doc(this.$fire.auth.currentUser.email)
@@ -94,9 +118,26 @@ const actions = {
         snapshot.docs.forEach((doc) => {
           members.push(doc.data())
         })
-        state.commit('setMembers', members)
-        const singleTask = snapshot.docs.find((doc) => doc.id === taskId)
-        return singleTask
+        commit('setMembers', members)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  },
+  getAdminsAccount(state, taskId) {
+    this.$fire.firestore
+      .collection('users')
+      .get()
+      .then((snapshot) => {
+        const adminsAccount = ['Przełożony']
+        snapshot.docs.forEach((doc) => {
+          if (
+            doc.data().permissions === 'admin' ||
+            doc.data().permissions === 'super_admin'
+          )
+            adminsAccount.push(doc.id)
+        })
+        state.commit('setAdmins', adminsAccount)
       })
       .catch((err) => {
         console.log(err)

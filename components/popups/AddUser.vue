@@ -1,17 +1,17 @@
 <template>
   <div>
     <button
-      v-if="showTaskButton"
+      v-if="showUserButton"
       class="button_green button_green_small"
       @click="changePopup"
     >
-      Dodaj zadanie
+      Dodaj Użytkownika
     </button>
     <Popup :show-popup="showPopup" @clicked="changePopup">
       <div class="add_task_con">
         <CenterContainer>
           <h2 class="green_header">Wprowadź dane.</h2>
-          <FormTask @clicked="changePopup"></FormTask>
+          <FormUser @clicked="changePopup"></FormUser>
         </CenterContainer>
       </div>
     </Popup>
@@ -25,11 +25,8 @@ export default {
     }
   },
   computed: {
-    showTaskButton() {
-      if (
-        this.$store.getters.getPermissions === 'admin' ||
-        this.$store.getters.getPermissions === 'super_admin'
-      ) {
+    showUserButton() {
+      if (this.$store.getters.getPermissions === 'super_admin') {
         return true
       }
       return false

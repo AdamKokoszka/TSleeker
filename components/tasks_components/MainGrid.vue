@@ -13,7 +13,7 @@
     <div v-else-if="isError" class="board_con">
       <div class="loading_con">
         <img src="~/assets/loading.svg" />
-        <h3>Problem z poprawniem danych...</h3>
+        <h3>Problem z pobrawniem danych...</h3>
       </div>
     </div>
     <div v-else class="board_con">
@@ -52,6 +52,7 @@ export default {
       .then((info) => {
         if (info.data()) this.permissions = info.data().permissions
         this.$store.commit('setPermissions', this.permissions)
+        this.permAdmin(this.permissions)
       })
 
     this.$fire.firestore
@@ -78,8 +79,6 @@ export default {
           console.log(error)
         }
       )
-
-    this.$store.dispatch('getTeamMembers')
   },
   methods: {
     segregationTasks() {
@@ -116,6 +115,14 @@ export default {
         singleRetriveal.delay = true
         this.taskGroup[0].unshift(singleRetriveal)
       })
+    },
+    permAdmin(perm) {
+      if (perm === 'admin' || perm === 'super_admin') {
+        this.$store.dispatch('getTeamMembers')
+      }
+      if (perm === 'super_admin') {
+        this.$store.dispatch('getAdminsAccount')
+      }
     },
   },
 }

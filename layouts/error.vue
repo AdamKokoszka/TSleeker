@@ -7,7 +7,7 @@
       <h1 v-else class="header1">
         {{ otherError }}
       </h1>
-      <NuxtLink to="/" class="button_green">Wróć na stronę główną</NuxtLink>
+      <a class="button_green" @click="errorBack">Wróć na stronę główną</a>
     </CenterContainer>
   </div>
 </template>
@@ -33,6 +33,13 @@ export default {
     return {
       title,
     }
+  },
+  methods: {
+    errorBack() {
+      this.$store.commit('resetState')
+      this.$router.go('/')
+      this.$fire.auth.signOut()
+    },
   },
 }
 </script>
