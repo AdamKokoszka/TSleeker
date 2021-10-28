@@ -27,6 +27,14 @@ export default {
     ],
   },
 
+  env: {
+    secondConfig: {
+      apiKey: 'AIzaSyBNyrl-fCzYWBtjozf09TeSQGm4_auTcws',
+      authDomain: 'test-nuxt-auth-52d70.firebaseapp.com',
+      databaseURL: 'https://test-nuxt-auth-52d70-default-rtdb.firebaseio.com',
+    },
+  },
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: ['~/assets/style.css'],
 

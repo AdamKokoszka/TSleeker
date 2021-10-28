@@ -17,7 +17,19 @@ const errorTranslator = [
   },
   {
     code: 'auth/email-already-in-use',
-    text: 'Użytkownik o podanym emailu już istnieje!',
+    text: 'Użytkownik o podanym emailu już istnieje.',
+  },
+  {
+    code: 'auth/invalid-email',
+    text: 'Nieprawidłowy email.',
+  },
+  {
+    code: 'auth/invalid-password',
+    text: 'Nieprawidłowe hasło.',
+  },
+  {
+    code: 'auth/weak-password',
+    text: 'Hasło powinno zawierać conajmniej 6 znaków.',
   },
 ]
 export default errorTranslator

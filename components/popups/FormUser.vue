@@ -25,6 +25,12 @@
         type="text"
         placeholder="Imie i nazwisko"
       />
+      <select v-model="select_perm" required>
+        <option value="" disabled>Rodzaj konta</option>
+        <option value="user">Pracownik</option>
+        <option value="admin">Przełożony</option>
+        <option value="super_admin">Administrator</option>
+      </select>
       <select v-model="select_user" required>
         <option
           v-for="(admin, index) in allAdmin"
@@ -51,6 +57,7 @@
   </div>
 </template>
 <script>
+import firebase from 'firebase'
 import errorTranslator from '~/assets/errorTranslator.js'
 export default {
   data() {
@@ -62,6 +69,7 @@ export default {
       },
       hideEye: false,
       select_user: '',
+      select_perm: '',
       snackbarText: '',
       allAdmin: [],
       correctUserData: false,
@@ -77,15 +85,41 @@ export default {
       this.snackbarText = ''
       const that = this
 
-      this.$fire.auth
+      const secondaryApp = firebase.initializeApp(
+        process.env.secondConfig,
+        'Secondary'
+      )
+
+      secondaryApp
+        .auth()
         .createUserWithEmailAndPassword(
           this.userData.email,
           this.userData.password
         )
-        .then((dane) => {
-          console.log('Działa!: ', dane)
+        .then(function (firebaseUser) {
+          console.log('Działa!: ', firebaseUser)
           that.correctUserData = true
           that.snackbarText = 'Dodano uzytkownika!'
+
+          secondaryApp.delete()
+          secondaryApp.auth().signOut()
+        })
+        .then(() => {
+          const userData = {
+            name: this.userData.name,
+            permissions: this.select_perm,
+          }
+          this.$fire.firestore
+            .collection('users')
+            .doc(this.userData.email)
+            .set(userData)
+
+          const setTeamMember = this.$fire.firestore
+            .collection('users')
+            .doc(this.select_user)
+            .collection('team_members')
+            .doc()
+          setTeamMember.set({ email: this.userData.email })
         })
         .catch(function (error) {
           console.log('Error obj: ', error)
@@ -97,11 +131,9 @@ export default {
           } else {
             that.snackbarText = 'Podane dane zawierają błąd! Spróbuj ponownie.'
           }
+          secondaryApp.delete()
         })
-      setTimeout(function () {
-        that.snackbarText = ''
-        that.correctUserData = false
-      }, 5000)
+
       // .then((user) => {
       //   const userData = {
       //     name: user.user.email,
@@ -116,24 +148,12 @@ export default {
       //   // we are signed in
       //   // $nuxt.$router.push('/')
       // })
-
-      //   const getDate = new Date(this.userData.end_date)
-      //   this.userData.end_date = getDate
-      //   const isPermisionUser = this.allMembers.filter(
-      //     (member) => member.email === this.select_user
-      //   )
-      //   if (isPermisionUser.length > 0) {
-      //     const tasksHandler = this.$fire.firestore
-      //       .collection('users')
-      //       .doc(this.select_user)
-      //       .collection('tasks')
-      //       .doc()
-      //     tasksHandler.set(this.userData)
-      //     this.$emit('clicked')
-      //   }
+      setTimeout(function () {
+        that.snackbarText = ''
+        that.correctUserData = false
+      }, 5000)
     },
     changeEye() {
-      //   console.log(this.allAdmin[0].email)
       this.hideEye = !this.hideEye
     },
   },

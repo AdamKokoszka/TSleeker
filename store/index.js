@@ -53,8 +53,6 @@ const mutations = {
     state.permissions = permissions
   },
   resetState(state) {
-    // Merge rather than replace so we don't lose observers
-    // https://github.com/vuejs/vuex/issues/1118
     Object.assign(state, getDefaultState())
   },
 }
@@ -104,7 +102,7 @@ const actions = {
         console.log(err)
       })
   },
-  getTeamMembers({ commit, getters }, taskId) {
+  getTeamMembers({ commit }) {
     this.$fire.firestore
       .collection('users')
       .doc(this.$fire.auth.currentUser.email)
@@ -124,12 +122,12 @@ const actions = {
         console.log(err)
       })
   },
-  getAdminsAccount(state, taskId) {
+  getAdminsAccount(state) {
     this.$fire.firestore
       .collection('users')
       .get()
       .then((snapshot) => {
-        const adminsAccount = ['Przełożony']
+        const adminsAccount = ['Przełożony nowego użytkownika']
         snapshot.docs.forEach((doc) => {
           if (
             doc.data().permissions === 'admin' ||
