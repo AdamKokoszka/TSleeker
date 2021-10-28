@@ -15,5 +15,9 @@ const errorTranslator = [
     code: 'auth/too-many-requests',
     text: 'Za dużo zapytań do bazy. Spróbuj pózniej.',
   },
+  {
+    code: 'auth/email-already-in-use',
+    text: 'Użytkownik o podanym emailu już istnieje!',
+  },
 ]
 export default errorTranslator

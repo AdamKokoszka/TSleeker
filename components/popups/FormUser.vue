@@ -20,6 +20,11 @@
           @click="changeEye"
         ></div>
       </div>
+      <input
+        v-model="userData.name"
+        type="text"
+        placeholder="Imie i nazwisko"
+      />
       <select v-model="select_user" required>
         <option
           v-for="(admin, index) in allAdmin"
@@ -31,6 +36,14 @@
         </option>
       </select>
       <button type="submit" class="button_green">Dodaj użytkownika!</button>
+      <transition name="fade_in_out">
+        <p
+          v-if="snackbarText"
+          :class="{ error: true, correct_user_data: correctUserData }"
+        >
+          {{ snackbarText }}
+        </p></transition
+      >
     </form>
     <div class="close_con">
       <img src="~assets/close.png" alt="Close" />
@@ -38,17 +51,22 @@
   </div>
 </template>
 <script>
+import errorTranslator from '~/assets/errorTranslator.js'
 export default {
   data() {
     return {
       userData: {
         email: '',
         password: '',
+        name: '',
       },
       hideEye: false,
       select_user: '',
+      snackbarText: '',
       allAdmin: [],
+      correctUserData: false,
       disabled: 'disabled',
+      errorTranslator,
     }
   },
   mounted() {
@@ -56,6 +74,49 @@ export default {
   },
   methods: {
     addUser() {
+      this.snackbarText = ''
+      const that = this
+
+      this.$fire.auth
+        .createUserWithEmailAndPassword(
+          this.userData.email,
+          this.userData.password
+        )
+        .then((dane) => {
+          console.log('Działa!: ', dane)
+          that.correctUserData = true
+          that.snackbarText = 'Dodano uzytkownika!'
+        })
+        .catch(function (error) {
+          console.log('Error obj: ', error)
+          const errorText = that.errorTranslator.find(
+            (ell) => ell.code === error.code
+          )
+          if (errorText) {
+            that.snackbarText = errorText.text
+          } else {
+            that.snackbarText = 'Podane dane zawierają błąd! Spróbuj ponownie.'
+          }
+        })
+      setTimeout(function () {
+        that.snackbarText = ''
+        that.correctUserData = false
+      }, 5000)
+      // .then((user) => {
+      //   const userData = {
+      //     name: user.user.email,
+      //     permissions: 'user',
+      //   }
+
+      //   this.$fire.firestore
+      //     .collection('users')
+      //     .doc(this.userData.email)
+      //     .set(userData)
+
+      //   // we are signed in
+      //   // $nuxt.$router.push('/')
+      // })
+
       //   const getDate = new Date(this.userData.end_date)
       //   this.userData.end_date = getDate
       //   const isPermisionUser = this.allMembers.filter(

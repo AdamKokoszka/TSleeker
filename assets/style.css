@@ -2,16 +2,14 @@
   box-sizing: border-box;
 }
 :root {
-  /* --color-gray-light: #f3f4f6; */
   --color-gray-light: #ededed;
   --color-gray-dark: #292929;
   --color-green-dark: #059669;
+  --color-green-light: #84e3c8;
   --color-blue-dark: #0f52ba;
   --color-blue-light: #437edb;
-  /* --color-blue-lighter: #edf3ff; */
   --color-blue-lighter: #dbe7ff;
   --color-red-light: #ee3434;
-  /* --color-red-lighter: #ffecec; */
   --color-red-lighter: #ffd1d1;
 
   /* --color-task-1: #84e3c8;
@@ -24,7 +22,7 @@
 }
 
 ::selection {
-  background: #84e3c8;
+  background: var(--color-green-light);
 }
 
 html {
@@ -176,4 +174,9 @@ a {
   padding: 10px;
   background-color: rgb(255, 125, 125);
   color: #fff;
+}
+.form_main .error.correct_user_data {
+  background-color: var(--color-green-light);
+  color: var(--color-green-dark);
+  font-weight: 700;
 }
