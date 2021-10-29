@@ -1,7 +1,7 @@
 <template>
   <div class="date">
     <h3>
-      {{ numDay }} <span>{{ monthOfWeekText }}</span>
+      {{ numDayText }} <span>{{ monthOfWeekText }}</span>
     </h3>
     <p>{{ dayOfWeekText }}</p>
   </div>
@@ -13,15 +13,11 @@ import {
 } from '~/assets/dateTranslator.js'
 export default {
   props: {
-    numDay: {
-      type: Number,
+    firstDayDate: {
+      type: Date,
       default: 0,
     },
-    numMonth: {
-      type: Number,
-      default: 0,
-    },
-    dayOfWeek: {
+    itemNum: {
       type: Number,
       default: 0,
     },
@@ -33,10 +29,20 @@ export default {
     }
   },
   computed: {
+    currentDate() {
+      const displayNumberDate = new Date()
+      displayNumberDate.setDate(this.firstDayDate.getDate() + this.itemNum)
+      return displayNumberDate
+    },
+    numDayText() {
+      return this.currentDate.getDate()
+    },
     dayOfWeekText() {
       let dayText = ''
+      const dayOfWeek = this.currentDate.getDay()
+
       dayOfWeekTranslator.forEach((item) => {
-        if (item.number === this.dayOfWeek % 7) {
+        if (item.number === dayOfWeek % 7) {
           dayText = item.text
         }
       })
@@ -44,8 +50,10 @@ export default {
     },
     monthOfWeekText() {
       let monthText = ''
+      const curNumMonth = this.currentDate.getMonth()
+
       monthOfWeekTranslator.forEach((item) => {
-        if (item.number === this.numMonth) {
+        if (item.number === curNumMonth) {
           monthText = item.text
         }
       })

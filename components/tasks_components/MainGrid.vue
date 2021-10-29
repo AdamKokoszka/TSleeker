@@ -3,9 +3,8 @@
     <div v-if="isLoaded && !isError" class="board_con">
       <div v-for="(item, index) in colmunCount" :key="index" class="col_for">
         <Column
-          :num-day="currentDate.getDate() + item - 1"
-          :num-month="currentDate.getMonth()"
-          :day-of-week="currentDate.getDay() + item - 1"
+          :first-day-date="currentDate"
+          :item-num="item - 1"
           :task-as-a-day="taskGroup[index]"
         />
       </div>
@@ -42,6 +41,7 @@ export default {
         email: '',
         password: '',
       },
+      pomDate: '',
     }
   },
   mounted() {

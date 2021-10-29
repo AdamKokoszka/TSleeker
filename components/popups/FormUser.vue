@@ -25,13 +25,13 @@
         type="text"
         placeholder="Imie i nazwisko"
       />
-      <select v-model="select_perm" required>
+      <select v-model="select_perm" :class="{ active: select_perm }" required>
         <option value="" disabled>Rodzaj konta</option>
         <option value="user">Pracownik</option>
         <option value="admin">Przełożony</option>
         <option value="super_admin">Administrator</option>
       </select>
-      <select v-model="select_user" required>
+      <select v-model="select_user" :class="{ active: select_user }" required>
         <option
           v-for="(admin, index) in allAdmin"
           :key="index"

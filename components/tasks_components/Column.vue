@@ -1,6 +1,6 @@
 <template>
   <div :class="{ col: true, color_week: isWeekend }">
-    <Date :num-day="numDay" :num-month="numMonth" :day-of-week="dayOfWeek" />
+    <Date :first-day-date="firstDayDate" :item-num="itemNum" />
     <div v-if="taskAsADay.length <= 0" class="task_con">
       <p class="empty_task">Brak zadań na ten dzień...</p>
     </div>
@@ -16,15 +16,11 @@
 <script>
 export default {
   props: {
-    numDay: {
-      type: Number,
+    firstDayDate: {
+      type: Date,
       default: 0,
     },
-    numMonth: {
-      type: Number,
-      default: 0,
-    },
-    dayOfWeek: {
+    itemNum: {
       type: Number,
       default: 0,
     },

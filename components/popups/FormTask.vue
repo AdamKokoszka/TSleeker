@@ -21,7 +21,7 @@
         onfocus="(this.type='date')"
         required
       />
-      <select v-model="select_user" required>
+      <select v-model="select_user" :class="{ active: select_user }" required>
         <option
           v-for="(member, index) in allMembers"
           :key="index"
@@ -31,6 +31,12 @@
           {{ member.email }}
         </option>
       </select>
+      <div class="checkbox_con">
+        <input id="checkbox" v-model="taskData.priority" type="checkbox" />
+        <label for="checkbox" :class="{ dark_text: taskData.priority }"
+          >Zadanie priorytetowe</label
+        >
+      </div>
       <button type="submit" class="button_green">Dodaj zadanie!</button>
     </form>
     <div class="close_con">
@@ -45,9 +51,11 @@ export default {
       taskData: {
         header: '',
         description: '',
+        priority: '',
         end_date: '',
       },
       select_user: '',
+      clockedCheckbox: false,
       allMembers: [],
       disabled: 'disabled',
     }
@@ -80,6 +88,26 @@ export default {
 .add_task_con .button_green {
   display: block;
   width: 100%;
+}
+.checkbox_con {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.checkbox_con input {
+  width: 13px;
+  margin-right: 10px;
+  margin-bottom: 0;
+  padding: 0;
+  transform: scale(1.3);
+}
+.checkbox_con label {
+  display: block;
+  color: #757575;
+}
+.checkbox_con .dark_text {
+  color: var(--color-grey-dark);
 }
 .close_con {
   position: absolute;
