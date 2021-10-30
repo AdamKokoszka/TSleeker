@@ -26,9 +26,9 @@
           v-for="(member, index) in allMembers"
           :key="index"
           :disabled="index == 0"
-          :value="index == 0 ? '' : member.email"
+          :value="index == 0 ? '' : member"
         >
-          {{ member.email }}
+          {{ member }}
         </option>
       </select>
       <div class="checkbox_con">

@@ -96,8 +96,7 @@ export default {
           this.userData.email,
           this.userData.password
         )
-        .then(function (firebaseUser) {
-          console.log('Działa!: ', firebaseUser)
+        .then(function () {
           that.correctUserData = true
           that.snackbarText = 'Dodano uzytkownika!'
 
@@ -108,6 +107,7 @@ export default {
           const userData = {
             name: this.userData.name,
             permissions: this.select_perm,
+            supervisor: this.select_user,
           }
           this.$fire.firestore
             .collection('users')
@@ -134,20 +134,6 @@ export default {
           secondaryApp.delete()
         })
 
-      // .then((user) => {
-      //   const userData = {
-      //     name: user.user.email,
-      //     permissions: 'user',
-      //   }
-
-      //   this.$fire.firestore
-      //     .collection('users')
-      //     .doc(this.userData.email)
-      //     .set(userData)
-
-      //   // we are signed in
-      //   // $nuxt.$router.push('/')
-      // })
       setTimeout(function () {
         that.snackbarText = ''
         that.correctUserData = false

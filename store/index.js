@@ -13,6 +13,7 @@ const getDefaultState = () => {
     permissions: '',
     members: [],
     adminsAccount: [],
+    usersAccount: [],
   }
 }
 
@@ -34,6 +35,9 @@ const getters = {
   getAdmins(state) {
     return state.adminsAccount
   },
+  getUsers(state) {
+    return state.usersAccount
+  },
 }
 
 const mutations = {
@@ -48,6 +52,9 @@ const mutations = {
   },
   setAdmins(state, admins) {
     state.adminsAccount = admins
+  },
+  setUsers(state, users) {
+    state.usersAccount = users
   },
   setPermissions(state, permissions) {
     state.permissions = permissions
@@ -105,16 +112,12 @@ const actions = {
   getTeamMembers({ commit }) {
     this.$fire.firestore
       .collection('users')
-      .doc(this.$fire.auth.currentUser.email)
-      .collection('team_members')
       .get()
       .then((snapshot) => {
-        const members = [
-          { email: 'Użytkownik' },
-          { email: this.$fire.auth.currentUser.email },
-        ]
+        const members = ['Użytkownik', this.$fire.auth.currentUser.email]
         snapshot.docs.forEach((doc) => {
-          members.push(doc.data())
+          if (doc.data().supervisor === this.$fire.auth.currentUser.email)
+            members.push(doc.id)
         })
         commit('setMembers', members)
       })
@@ -136,6 +139,21 @@ const actions = {
             adminsAccount.push(doc.id)
         })
         state.commit('setAdmins', adminsAccount)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  },
+  getUsersAccount(state) {
+    this.$fire.firestore
+      .collection('users')
+      .get()
+      .then((snapshot) => {
+        const usersAccount = ['Konto użytkownia']
+        snapshot.docs.forEach((doc) => {
+          usersAccount.push(doc.id)
+        })
+        state.commit('setUsers', usersAccount)
       })
       .catch((err) => {
         console.log(err)

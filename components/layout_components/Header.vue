@@ -16,7 +16,10 @@
           $store.getters.getPermissions === 'super_admin'
         "
       ></AddTask>
-      <AddUser></AddUser>
+      <AddUser v-if="$store.getters.getPermissions === 'super_admin'"></AddUser>
+      <EditUser
+        v-if="$store.getters.getPermissions === 'super_admin'"
+      ></EditUser>
     </div>
   </div>
 </template>

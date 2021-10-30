@@ -122,6 +122,7 @@ export default {
       }
       if (perm === 'super_admin') {
         this.$store.dispatch('getAdminsAccount')
+        this.$store.dispatch('getUsersAccount')
       }
     },
   },
