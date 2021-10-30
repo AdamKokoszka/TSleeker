@@ -1,10 +1,6 @@
 <template>
   <div>
-    <button
-      v-if="showTaskButton"
-      class="button_green button_green_small"
-      @click="changePopup"
-    >
+    <button v-if="showTaskButton" class="button_nav" @click="changePopup">
       Dodaj zadanie
     </button>
     <Popup :show-popup="showPopup" @clicked="changePopup">

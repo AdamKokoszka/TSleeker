@@ -27,7 +27,7 @@
         ></AddTask>
         <button
           v-if="$store.getters.getUser"
-          class="button_green button_green_small"
+          class="button_nav"
           @click="$router.push('/auth/signout')"
         >
           Wyloguj

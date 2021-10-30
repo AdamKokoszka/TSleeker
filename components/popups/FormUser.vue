@@ -9,6 +9,7 @@
       />
       <div class="password_con">
         <input
+          ref="password"
           v-model="userData.password"
           :type="hideEye ? 'text' : 'password'"
           placeholder="Hasło"
@@ -141,6 +142,10 @@ export default {
     },
     changeEye() {
       this.hideEye = !this.hideEye
+      this.$nextTick(() => {
+        const password = this.$refs.password
+        password.focus()
+      })
     },
   },
 }

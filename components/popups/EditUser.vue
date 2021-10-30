@@ -1,10 +1,6 @@
 <template>
   <div>
-    <button
-      v-if="showUserButton"
-      class="button_green button_green_small"
-      @click="changePopup"
-    >
+    <button v-if="showUserButton" class="button_nav" @click="changePopup">
       Zarządzaj Użytkownikami
     </button>
     <Popup :show-popup="showPopup" @clicked="changePopup">

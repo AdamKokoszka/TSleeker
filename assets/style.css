@@ -82,28 +82,48 @@ a {
   width: fit-content;
   width: -moz-fit-content;
   padding: 10px;
-  font-size: 18px;
   border-radius: 5px;
   font-size: 20px;
   cursor: pointer;
   color: #fff;
   border: 2px solid var(--color-green-dark);
   background-color: var(--color-green-dark);
+  /* background-color: #fff; */
+  border: none;
+  /* border-top: 2px solid #fff; */
+  border: 2px solid var(--color-green-dark);
+  /* color: var(--color-green-dark); */
   transition: 0.3s;
   font-weight: 700;
 }
 
-.button_green_small {
-  font-size: 13px;
+.button_nav {
+  width: fit-content;
+  width: -moz-fit-content;
   padding: 5px;
   margin-left: 10px;
+  border: 0;
+  border-top: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+  color: var(--color-green-dark);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
 .button_green:hover,
 .button_green:focus {
   background-color: #fff;
   color: var(--color-green-dark);
+  /* background-color: var(--color-green-dark); */
+  /* color: #fff; */
+  /* border-top: 2px solid var(--color-green-dark); */
   outline: none;
+}
+.button_nav:hover,
+.button_nav:focus {
+  border-bottom: 2px solid var(--color-green-dark);
 }
 
 /* Form styles */
@@ -127,7 +147,11 @@ a {
   margin-bottom: 10px;
   border-color: transparent;
   font-family: 'Lato', sans-serif;
-  border: 2px solid #fff;
+  border-top: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  border-left: 0px solid transparent;
+  border-right: 0px solid transparent;
+  transition: 0.3s;
 }
 .form_main input:active,
 .form_main input:focus,
@@ -136,8 +160,10 @@ a {
 .form_main select:active,
 .form_main select:focus {
   outline: none;
-  border: 2px solid var(--color-green-dark);
   color: var(--color-gray-dark);
+  background-color: #f8fcfb;
+  border-top: 2px solid #f8fcfb;
+  border-bottom: 2px solid var(--color-green-dark);
 }
 .form_main select {
   position: relative;
@@ -154,6 +180,8 @@ a {
   -webkit-appearance: none; /* Safari and Chrome */
   appearance: none;
   border: 2px solid #fff;
+  border-left: 0px solid transparent;
+  border-right: 0px solid transparent;
   background: #fff url(~assets/arrow_bottom.png) no-repeat;
   background-position: center right 12px;
   color: #757575;
