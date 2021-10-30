@@ -9,6 +9,7 @@
 const getDefaultState = () => {
   return {
     user: null,
+    username: null,
     tasks: [],
     permissions: '',
     members: [],
@@ -22,6 +23,9 @@ const state = getDefaultState()
 const getters = {
   getUser(state) {
     return state.user
+  },
+  getUserName(state) {
+    return state.username
   },
   getPermissions(state) {
     return state.permissions
@@ -43,6 +47,9 @@ const getters = {
 const mutations = {
   SET_USER(state, user) {
     state.user = user
+  },
+  setUserName(state, username) {
+    state.username = username
   },
   setTasks(state, tasks) {
     state.tasks = tasks
@@ -81,6 +88,26 @@ const actions = {
         uid,
         email,
       })
+
+      this.$fire.firestore
+        .collection('users')
+        .doc(email)
+        .get()
+        .then((snapshot) => {
+          if (snapshot.data().name !== '') {
+            state.commit('setUserName', snapshot.data().name)
+          } else {
+            const curUser = state.getters.getUser
+            if (curUser) {
+              state.commit('setUserName', state.getters.getUser.email)
+            } else {
+              state.commit('setUserName', null)
+            }
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
   },
   deleteTask(commit, taskId) {
