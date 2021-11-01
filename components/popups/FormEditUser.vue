@@ -48,6 +48,9 @@
               {{ admin }}
             </option>
           </select>
+          <button type="button" class="button_nav" @click="alertDeleteUser">
+            Usuń użytkownika
+          </button>
           <button type="submit" class="button_green">Zaktualizuj dane!</button>
         </div>
       </transition>
@@ -63,6 +66,19 @@
     <div class="close_con">
       <img src="~assets/close.png" alt="Close" />
     </div>
+    <Popup :show-popup="showPopup" @clicked="changePopup">
+      <div class="add_task_con">
+        <CenterContainer>
+          <h2 class="green_header">Czy na pewno chcesz usunąć użytkownika?</h2>
+          <div class="con_delete_button">
+            <button class="button_green" @click="changePopup">Anuluj</button>
+            <button class="button_green button_red" @click="deleteUser">
+              Usuń
+            </button>
+          </div>
+        </CenterContainer>
+      </div>
+    </Popup>
   </div>
 </template>
 <script>
@@ -81,6 +97,7 @@ export default {
       allUsers: [],
       correctUserData: false,
       errorTranslator,
+      showPopup: false,
     }
   },
   mounted() {
@@ -128,7 +145,7 @@ export default {
         .update(updatedUser)
         .then(() => {
           this.correctUserData = true
-          this.snackbarText = 'Zaktualizowano dane uzytkownika!'
+          this.snackbarText = 'Zaktualizowano dane użytkownika!'
         })
         .catch((error) => {
           const errorText = this.errorTranslator.find(
@@ -145,6 +162,37 @@ export default {
         this.snackbarText = ''
         this.correctUserData = false
       }, 5000)
+    },
+    alertDeleteUser() {
+      this.showPopup = true
+    },
+    deleteUser() {
+      console.log('Delete User!')
+      this.changePopup()
+      // this.$emit('clicked')
+      // this.allUsers = this.$store.getters.getUsers
+
+      this.$fire.firestore
+        .collection('users')
+        .doc(this.search_select_user)
+        .delete()
+        .then((snapshot) => {
+          console.log('snapshot: ', snapshot)
+          this.correctUserData = true
+          this.snackbarText = 'Usunięto dane użytkownika!'
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+
+      this.search_select_user = ''
+      setTimeout(() => {
+        this.snackbarText = ''
+        this.correctUserData = false
+      }, 5000)
+    },
+    changePopup() {
+      this.showPopup = !this.showPopup
     },
   },
 }
@@ -176,6 +224,36 @@ export default {
 }
 .password_con {
   position: relative;
+}
+.button_nav {
+  margin-bottom: 11px;
+  margin-left: 2px;
+  padding-right: 2px;
+  padding-left: 0;
+  padding-bottom: 2px;
+  color: var(--color-red-light);
+}
+.button_nav:hover,
+.button_nav:focus {
+  border-bottom: 2px solid var(--color-red-light);
+}
+.con_delete_button {
+  display: flex;
+  justify-content: center;
+  grid-gap: 20px;
+  margin-top: 10px;
+}
+.con_delete_button .button_green {
+  width: fit-content;
+  width: -moz-fit-content;
+}
+.con_delete_button .button_red {
+  background-color: var(--color-red-light);
+  border-color: var(--color-red-light);
+}
+.con_delete_button .button_red:hover {
+  background-color: #fff;
+  color: var(--color-red-light);
 }
 .eye_con {
   position: absolute;

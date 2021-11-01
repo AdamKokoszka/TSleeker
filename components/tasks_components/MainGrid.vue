@@ -108,6 +108,8 @@ export default {
         const currentDate = new Date(this.currentDate.getTime())
           .toString()
           .slice(8, 10)
+        console.log('taskDateSlice: ', taskDateSlice)
+        console.log('currentDate: ', currentDate)
         if (taskDateSlice < currentDate) return true
         return false
       })
