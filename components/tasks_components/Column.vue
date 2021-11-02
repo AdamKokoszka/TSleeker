@@ -50,7 +50,7 @@ export default {
   border-right: 1px solid var(--color-gray-light);
   border-left: 1px solid var(--color-gray-light);
   transition: 0.3s;
-  padding: 0 13px;
+  padding: 0 11px;
   padding-bottom: 20px;
 }
 

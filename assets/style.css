@@ -208,6 +208,28 @@ a {
   background-color: rgb(255, 125, 125);
   color: #fff;
 }
+.form_main .error2 {
+  position: absolute;
+  top: calc(100%);
+  left: 0;
+  right: 0;
+  width: -webkit-fit-content;
+  width: fit-content;
+  width: -moz-fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  border-radius: 0px 0px 5px 5px;
+  border-radius: 5px;
+  text-align: center;
+  padding: 10px;
+  /* background-color: rgb(255, 125, 125); */
+  background-color: #f1eded;
+  border: 2px solid #e75151;
+  /* border-top: 0; */
+  color: #e75151;
+  /* padding-top: 2px; */
+}
 .form_main .error.correct_user_data {
   background-color: var(--color-green-light);
   color: var(--color-green-dark);
