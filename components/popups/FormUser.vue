@@ -78,7 +78,7 @@ export default {
       errorTranslator,
     }
   },
-  mounted() {
+  created() {
     this.allAdmin = this.$store.getters.getAdmins
   },
   methods: {
@@ -115,12 +115,12 @@ export default {
             .doc(this.userData.email)
             .set(userData)
 
-          const setTeamMember = this.$fire.firestore
-            .collection('users')
-            .doc(this.select_user)
-            .collection('team_members')
-            .doc()
-          setTeamMember.set({ email: this.userData.email })
+          this.$store.dispatch('getAdminsAccount')
+          this.$store.dispatch('getUsersAccount')
+          this.$store.dispatch('getTeamMembers')
+        })
+        .then(() => {
+          this.allAdmin = this.$store.getters.getAdmins
         })
         .catch(function (error) {
           console.log('Error obj: ', error)

@@ -100,7 +100,7 @@ export default {
       showPopup: false,
     }
   },
-  mounted() {
+  created() {
     this.allUsers = this.$store.getters.getUsers
     this.allAdmin = this.$store.getters.getAdmins
   },
@@ -146,6 +146,8 @@ export default {
         .then(() => {
           this.correctUserData = true
           this.snackbarText = 'Zaktualizowano dane użytkownika!'
+
+          this.$store.dispatch('getTeamMembers')
         })
         .catch((error) => {
           const errorText = this.errorTranslator.find(
@@ -167,17 +169,15 @@ export default {
       this.showPopup = true
     },
     deleteUser() {
-      console.log('Delete User!')
-      this.changePopup()
-      // this.$emit('clicked')
-      // this.allUsers = this.$store.getters.getUsers
-
       this.$fire.firestore
         .collection('users')
         .doc(this.search_select_user)
         .delete()
-        .then((snapshot) => {
-          console.log('snapshot: ', snapshot)
+        .then(() => {
+          this.search_select_user = ''
+          this.allUsers = this.$store.getters.getUsers
+          this.allAdmin = this.$store.getters.getAdmins
+
           this.correctUserData = true
           this.snackbarText = 'Usunięto dane użytkownika!'
         })
@@ -185,7 +185,8 @@ export default {
           console.log(err)
         })
 
-      this.search_select_user = ''
+      this.changePopup()
+
       setTimeout(() => {
         this.snackbarText = ''
         this.correctUserData = false

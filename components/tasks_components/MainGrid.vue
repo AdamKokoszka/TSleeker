@@ -70,7 +70,6 @@ export default {
           })
           this.$store.commit('setTasks', tasks)
           this.tasks = this.$store.getters.getTasks
-          // console.log('taski: ', this.tasks)
           this.isLoaded = true
           this.taskGroup = []
           this.segregationTasks()
@@ -103,15 +102,16 @@ export default {
     retrievalDelayedTasks() {
       const retrivealTasks = this.tasks.filter((task) => {
         const taskDateSlice = new Date(task.end_date.seconds * 1000)
-          .toString()
-          .slice(8, 10)
+        taskDateSlice.setHours(0, 0, 1)
+
         const currentDate = new Date(this.currentDate.getTime())
-          .toString()
-          .slice(8, 10)
-        console.log('taskDateSlice: ', taskDateSlice)
-        console.log('currentDate: ', currentDate)
-        if (taskDateSlice < currentDate) return true
-        return false
+        currentDate.setHours(0, 0, 0)
+
+        if (taskDateSlice.getTime() < currentDate.getTime()) {
+          return true
+        } else {
+          return false
+        }
       })
       retrivealTasks.forEach((singleRetriveal) => {
         singleRetriveal.delay = true

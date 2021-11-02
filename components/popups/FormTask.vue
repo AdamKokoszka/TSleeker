@@ -51,7 +51,7 @@ export default {
       taskData: {
         header: '',
         description: '',
-        priority: '',
+        priority: false,
         end_date: '',
       },
       select_user: '',
@@ -60,7 +60,8 @@ export default {
       disabled: 'disabled',
     }
   },
-  mounted() {
+  created() {
+    console.log('Form Task created!')
     this.allMembers = this.$store.getters.getMembers
   },
   methods: {
@@ -68,7 +69,7 @@ export default {
       const getDate = new Date(this.taskData.end_date)
       this.taskData.end_date = getDate
       const isPermisionUser = this.allMembers.filter(
-        (member) => member.email === this.select_user
+        (member) => member === this.select_user
       )
       if (isPermisionUser.length > 0) {
         const tasksHandler = this.$fire.firestore

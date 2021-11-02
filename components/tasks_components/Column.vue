@@ -34,7 +34,11 @@ export default {
   },
   computed: {
     isWeekend() {
-      if (this.dayOfWeek % 7 === 0 || this.dayOfWeek % 7 === 6) return true
+      const currentDate = new Date()
+      currentDate.setDate(this.firstDayDate.getDate() + this.itemNum)
+      const dayOfWeek = currentDate.getDay()
+
+      if (dayOfWeek % 7 === 0 || dayOfWeek % 7 === 6) return true
       return false
     },
   },
@@ -49,9 +53,7 @@ export default {
   padding: 0 13px;
   padding-bottom: 20px;
 }
-.col:hover {
-  /* background-color: var(--color-gray-light); */
-}
+
 .empty_task {
   text-align: center;
   opacity: 0.5;

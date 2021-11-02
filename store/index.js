@@ -137,26 +137,23 @@ const actions = {
       })
   },
   getTeamMembers({ commit }) {
-    this.$fire.firestore
-      .collection('users')
-      .get()
-      .then((snapshot) => {
+    this.$fire.firestore.collection('users').onSnapshot(
+      (snapshot) => {
         const members = ['Użytkownik', this.$fire.auth.currentUser.email]
         snapshot.docs.forEach((doc) => {
           if (doc.data().supervisor === this.$fire.auth.currentUser.email)
             members.push(doc.id)
         })
         commit('setMembers', members)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
   },
   getAdminsAccount(state) {
-    this.$fire.firestore
-      .collection('users')
-      .get()
-      .then((snapshot) => {
+    this.$fire.firestore.collection('users').onSnapshot(
+      (snapshot) => {
         const adminsAccount = ['Przełożony nowego użytkownika']
         snapshot.docs.forEach((doc) => {
           if (
@@ -166,25 +163,25 @@ const actions = {
             adminsAccount.push(doc.id)
         })
         state.commit('setAdmins', adminsAccount)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
   },
   getUsersAccount(state) {
-    this.$fire.firestore
-      .collection('users')
-      .get()
-      .then((snapshot) => {
+    this.$fire.firestore.collection('users').onSnapshot(
+      (snapshot) => {
         const usersAccount = ['Konto użytkownia']
         snapshot.docs.forEach((doc) => {
           usersAccount.push(doc.id)
         })
         state.commit('setUsers', usersAccount)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
   },
 }
 
