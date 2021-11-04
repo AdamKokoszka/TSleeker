@@ -18,5 +18,28 @@
   display: flex;
   flex-direction: column;
   flex: 1;
+  overflow-y: auto;
+}
+
+::-webkit-scrollbar {
+  height: 6px;
+  width: 8px;
+  background: #ededed;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #292929;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+.invisible-scrollbar {
+  scrollbar-width: none;
+}
+.invisible-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 </style>

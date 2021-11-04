@@ -21,8 +21,9 @@
         ></AddUser>
         <AddTask
           v-if="
+            $store.getters.getPermissions === 'super_admin' ||
             $store.getters.getPermissions === 'admin' ||
-            $store.getters.getPermissions === 'super_admin'
+            $store.getters.getPermissions === 'user'
           "
         ></AddTask>
         <button
@@ -46,55 +47,10 @@ export default {
   computed: {
     userName() {
       const curUser = this.$store.getters.getUserName
+      // console.log('curUser:', curUser)
       if (curUser) return this.$store.getters.getUserName
       return null
     },
-  },
-  mounted() {
-    // const curUser = this.$store.getters.getUser
-    // if (curUser) {
-    //   this.userName = this.$store.getters.getUser.email
-    //   this.$fire.firestore
-    //     .collection('users')
-    //     .doc(this.$fire.auth.currentUser.email)
-    //     .get()
-    //     .then((snapshot) => {
-    //       if (snapshot.data().name) {
-    //         this.userName = snapshot.data().name
-    //       }
-    //     })
-    //     .catch((err) => {
-    //       console.log(err)
-    //     })
-    // } else {
-    //   this.userName = null
-    // }
-  },
-  methods: {
-    // checkUserName() {
-    //   if (this.$store.getters.getUser) {
-    //     this.$fire.firestore
-    //       .collection('users')
-    //       .doc(this.$fire.auth.currentUser.email)
-    //       .get()
-    //       .then((snapshot) => {
-    //         console.log('user: ', snapshot.data().name)
-    //         if (snapshot.data().name) {
-    //           return snapshot.data().name
-    //         } else {
-    //           const curUser = this.$store.getters.getUser
-    //           if (curUser) {
-    //             return this.$store.getters.getUser.email
-    //           } else {
-    //             return null
-    //           }
-    //         }
-    //       })
-    //       .catch((err) => {
-    //         console.log(err)
-    //       })
-    //   }
-    // },
   },
 }
 </script>

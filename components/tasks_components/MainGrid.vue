@@ -1,34 +1,47 @@
 <template>
-  <transition name="view" appear>
-    <div v-if="isLoaded && !isError" class="board_con">
-      <div v-for="(item, index) in colmunCount" :key="index" class="col_for">
-        <Column
-          :first-day-date="currentDate"
-          :item-num="item - 1"
-          :task-as-a-day="taskGroup[index]"
-        />
+  <div v-if="isLoaded && !isError" class="board_con_all">
+    <div v-swiper="swiperOption" :loadtheme="false">
+      <div class="swiper-wrapper">
+        <div
+          v-for="(item, index) in colmunCount"
+          :key="index"
+          class="swiper-slide"
+        >
+          <Column
+            :first-day-date="currentDate"
+            :item-num="item - 1"
+            :task-as-a-day="taskGroup[index]"
+          />
+        </div>
       </div>
+      <div slot="button-prev" class="swiper_button swiper_button_prev"></div>
+      <div slot="button-next" class="swiper_button swiper_button_next"></div>
     </div>
-    <div v-else-if="isError" class="board_con">
-      <div class="loading_con">
-        <img src="~/assets/loading.svg" />
-        <h3>Problem z pobrawniem danych...</h3>
-      </div>
+  </div>
+  <div v-else-if="isError" class="board_con">
+    <div class="loading_con">
+      <img src="~/assets/loading.svg" />
+      <h3>Problem z pobrawniem danych...</h3>
     </div>
-    <div v-else class="board_con">
-      <div class="loading_con">
-        <img src="~/assets/loading.svg" />
-        <h3>Ładowanie...</h3>
-      </div>
+  </div>
+  <div v-else class="board_con">
+    <div class="loading_con">
+      <img src="~/assets/loading.svg" />
+      <h3>Ładowanie...</h3>
     </div>
-  </transition>
+  </div>
 </template>
 <script>
+import { directive } from 'vue-awesome-swiper'
 export default {
+  name: 'Slider',
+  directives: {
+    swiper: directive,
+  },
   data() {
     return {
       currentDate: new Date(),
-      colmunCount: 7,
+      colmunCount: 30,
       isLoaded: false,
       isError: false,
       tasks: [],
@@ -42,6 +55,15 @@ export default {
         password: '',
       },
       pomDate: '',
+
+      swiperOption: {
+        slidesPerView: 7,
+        slidesPerGroup: 2,
+        navigation: {
+          nextEl: '.swiper_button_next',
+          prevEl: '.swiper_button_prev',
+        },
+      },
     }
   },
   mounted() {
@@ -131,13 +153,24 @@ export default {
 }
 </script>
 <style scoped>
+.board_con_all {
+  display: flex;
+  flex: 1;
+  /* overflow-x: scroll; */
+  width: 100%;
+  max-width: 100%;
+}
+.board_con_all::-webkit-scrollbar {
+  display: none;
+}
 .board_con {
+  position: relative;
   display: flex;
   flex: 1;
   width: 100%;
 }
 .col_for {
-  width: 300px;
+  /* width: 300px; */
 }
 .loading_con {
   display: flex;
@@ -150,30 +183,35 @@ export default {
   position: relative;
   top: -30px;
 }
+.swiper-container {
+  max-width: 100%;
+}
 
-/* Old code to get data  
-this.$fire.firestore
-      .collection('users')
-      .doc(this.$fire.auth.currentUser.email)
-      .collection('tasks')
-      .orderBy('end_date', 'asc')
-      .get()
-      .then((snapshot) => {
-        const tasks = []
-        snapshot.docs.forEach((doc) => {
-          tasks.push(doc.data())
-        })
-        this.$store.commit('setTasks', tasks)
-        this.$store.commit('setPermissions', this.permissions)
-        console.log(this.permissions)
-        this.tasks = this.$store.getters.getTasks
-
-        this.isLoaded = true
-        this.segregationTasks()
-        // console.log(this.tasks)
-      })
-      .catch((err) => {
-        this.isError = true
-        console.log(err)
-      }) */
+.swiper_button {
+  position: absolute;
+  bottom: 6px;
+  width: 45px;
+  height: 45px;
+  z-index: 10;
+  opacity: 0.5;
+  transition: 0.3s;
+  cursor: pointer;
+}
+.swiper_button:hover {
+  opacity: 1;
+}
+.swiper_button_next {
+  right: 6px;
+  background: url(~assets/arrow_right.png);
+  background-size: cover;
+}
+.swiper_button_prev {
+  left: 6px;
+  background: url(~assets/arrow_left.png);
+  background-size: cover;
+}
+.swiper-button-disabled {
+  opacity: 0;
+  z-index: -1;
+}
 </style>

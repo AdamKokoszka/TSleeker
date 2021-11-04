@@ -33,6 +33,7 @@ body {
   margin: 0;
   padding: 0;
   height: 100vh;
+  overflow: hidden;
 }
 h1,
 h2,
@@ -208,7 +209,7 @@ a {
   background-color: rgb(255, 125, 125);
   color: #fff;
 }
-.form_main .error2 {
+.form_main .error3 {
   position: absolute;
   top: calc(100%);
   left: 0;

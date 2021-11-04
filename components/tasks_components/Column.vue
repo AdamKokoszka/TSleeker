@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ col: true, color_week: isWeekend }">
+  <div :class="{ col: true, color_week: isWeekend, hover_last: itemNum === 6 }">
     <Date :first-day-date="firstDayDate" :item-num="itemNum" />
     <div v-if="taskAsADay.length <= 0" class="task_con">
       <p class="empty_task">Brak zadań na ten dzień...</p>
@@ -61,5 +61,29 @@ export default {
 }
 .color_week {
   background-color: #e1e1e1;
+}
+
+.arrow_r_con {
+  position: absolute;
+  right: -45px;
+  top: calc(50% - 20px);
+  transition: 0.3s;
+  z-index: -1;
+}
+.arrow_r_con img {
+  width: 40px;
+  opacity: 0;
+  transition: 0.3s;
+  cursor: pointer;
+}
+.arrow_r_con img:hover {
+  opacity: 1;
+}
+.hover_last:hover .arrow_r_con {
+  transform: translateX(-50px);
+  z-index: 10;
+}
+.hover_last:hover .arrow_r_con img {
+  opacity: 0.5;
 }
 </style>

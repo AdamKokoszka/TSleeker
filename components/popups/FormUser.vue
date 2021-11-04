@@ -71,7 +71,7 @@ export default {
       hideEye: false,
       select_user: '',
       select_perm: '',
-      snackbarText: '',
+      snackbarText: 'Testowy naglowek 123',
       allAdmin: [],
       correctUserData: false,
       disabled: 'disabled',

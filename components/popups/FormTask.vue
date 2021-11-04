@@ -21,7 +21,12 @@
         onfocus="(this.type='date')"
         required
       />
-      <select v-model="select_user" :class="{ active: select_user }" required>
+      <select
+        v-if="isNotUser"
+        v-model="select_user"
+        :class="{ active: select_user }"
+        required
+      >
         <option
           v-for="(member, index) in allMembers"
           :key="index"
@@ -54,14 +59,24 @@ export default {
         priority: false,
         end_date: '',
       },
-      select_user: '',
+      select_user:
+        this.$store.getters.getPermissions === 'user'
+          ? this.$store.getters.getUser.email
+          : '',
       clockedCheckbox: false,
       allMembers: [],
       disabled: 'disabled',
     }
   },
+  computed: {
+    isNotUser() {
+      if (this.$store.getters.getPermissions === 'user') {
+        return false
+      }
+      return true
+    },
+  },
   created() {
-    console.log('Form Task created!')
     this.allMembers = this.$store.getters.getMembers
   },
   methods: {
@@ -71,15 +86,17 @@ export default {
       const isPermisionUser = this.allMembers.filter(
         (member) => member === this.select_user
       )
-      if (isPermisionUser.length > 0) {
-        const tasksHandler = this.$fire.firestore
-          .collection('users')
-          .doc(this.select_user)
-          .collection('tasks')
-          .doc()
-        tasksHandler.set(this.taskData)
-        this.$emit('clicked')
-      }
+      console.log('this.allMembers:', this.allMembers)
+      console.log('isPermisionUser:', isPermisionUser)
+      // if (isPermisionUser.length > 0) {
+      const tasksHandler = this.$fire.firestore
+        .collection('users')
+        .doc(this.select_user)
+        .collection('tasks')
+        .doc()
+      tasksHandler.set(this.taskData)
+      this.$emit('clicked')
+      // }
     },
   },
 }

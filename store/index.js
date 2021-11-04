@@ -94,15 +94,18 @@ const actions = {
         .doc(email)
         .get()
         .then((snapshot) => {
-          if (snapshot.data().name !== '') {
-            state.commit('setUserName', snapshot.data().name)
-          } else {
+          if (
+            typeof snapshot.data().name === 'undefined' ||
+            snapshot.data().name === ''
+          ) {
             const curUser = state.getters.getUser
             if (curUser) {
               state.commit('setUserName', state.getters.getUser.email)
             } else {
               state.commit('setUserName', null)
             }
+          } else {
+            state.commit('setUserName', snapshot.data().name)
           }
         })
         .catch((err) => {
