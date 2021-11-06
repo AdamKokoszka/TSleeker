@@ -236,3 +236,56 @@ a {
   color: var(--color-green-dark);
   font-weight: 700;
 }
+.form_main .editor_con {
+  overflow: auto;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-family: 'Lato', sans-serif;
+  box-shadow: 2px 4px 2px -6px, rgb(0 0 0 / 4%) 1px 1px 5px -1px;
+}
+.form_main .editor_con > div {
+  max-height: 600px;
+  min-height: 300px;
+}
+.editor_con .el-tiptap-editor > .el-tiptap-editor__content {
+  padding: 15px 15px;
+}
+.el-tiptap-editor {
+  height: 100%;
+}
+.editor_con
+  .el-tiptap-editor__placeholder.el-tiptap-editor--empty:first-child:before,
+.editor_con .el-tiptap-editor__with-title-placeholder:first-child:before,
+.editor_con .el-tiptap-editor__with-title-placeholder:nth-child(2):before {
+  color: #7d7d7d;
+}
+.split_2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
+}
+
+::-webkit-scrollbar {
+  height: 6px;
+  width: 8px;
+  background: #ededed;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #059669;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+.invisible-scrollbar {
+  scrollbar-width: none;
+}
+.invisible-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.el_tiptap.prev .el-tiptap-editor__menu-bubble {
+  display: none;
+}

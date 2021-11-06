@@ -23,7 +23,7 @@ export default {
   border-radius: 20px;
 }
 .preview_box {
-  min-width: 400px;
+  min-width: 1000px;
   width: 50%;
   margin-left: auto;
   margin-right: auto;

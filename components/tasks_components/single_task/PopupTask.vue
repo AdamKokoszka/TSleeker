@@ -1,7 +1,9 @@
 <template>
   <CenterContainer :previewBox="previewBox">
     <h2>{{ task.header }}</h2>
-    <p>{{ task.description }}</p>
+    <div class="editor_con">
+      <Editor :description="task.description" />
+    </div>
   </CenterContainer>
 </template>
 

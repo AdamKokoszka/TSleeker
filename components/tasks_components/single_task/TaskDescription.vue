@@ -1,7 +1,5 @@
 <template>
-  <p>
-    {{ description || '' }}
-  </p>
+  <div class="description" v-html="description"></div>
 </template>
 
 <script>
@@ -16,7 +14,7 @@ export default {
 </script>
 
 <style scoped>
-p {
+.description {
   position: relative;
   font-size: 14px;
   margin-top: 8px;

@@ -7,35 +7,40 @@
         placeholder="Nagłówek"
         required
       />
-      <textarea
+      <div class="editor_con">
+        <Editor :edit="true" required @clicked="updateEditor" />
+      </div>
+      <!-- <textarea
         v-model="taskData.description"
         type="text"
         placeholder="Opis"
         required
         rows="4"
-      ></textarea>
-      <input
-        v-model="taskData.end_date"
-        type="text"
-        placeholder="Data"
-        onfocus="(this.type='date')"
-        required
-      />
-      <select
-        v-if="isNotUser"
-        v-model="select_user"
-        :class="{ active: select_user }"
-        required
-      >
-        <option
-          v-for="(member, index) in allMembers"
-          :key="index"
-          :disabled="index == 0"
-          :value="index == 0 ? '' : member"
+      ></textarea> -->
+      <div class="split_2">
+        <input
+          v-model="taskData.end_date"
+          type="text"
+          placeholder="Data"
+          onfocus="(this.type='date')"
+          required
+        />
+        <select
+          v-if="isNotUser"
+          v-model="select_user"
+          :class="{ active: select_user }"
+          required
         >
-          {{ member }}
-        </option>
-      </select>
+          <option
+            v-for="(member, index) in allMembers"
+            :key="index"
+            :disabled="index == 0"
+            :value="index == 0 ? '' : member"
+          >
+            {{ member }}
+          </option>
+        </select>
+      </div>
       <div class="checkbox_con">
         <input id="checkbox" v-model="taskData.priority" type="checkbox" />
         <label for="checkbox" :class="{ dark_text: taskData.priority }"
@@ -83,12 +88,7 @@ export default {
     addTask() {
       const getDate = new Date(this.taskData.end_date)
       this.taskData.end_date = getDate
-      const isPermisionUser = this.allMembers.filter(
-        (member) => member === this.select_user
-      )
-      console.log('this.allMembers:', this.allMembers)
-      console.log('isPermisionUser:', isPermisionUser)
-      // if (isPermisionUser.length > 0) {
+
       const tasksHandler = this.$fire.firestore
         .collection('users')
         .doc(this.select_user)
@@ -96,7 +96,9 @@ export default {
         .doc()
       tasksHandler.set(this.taskData)
       this.$emit('clicked')
-      // }
+    },
+    updateEditor(value) {
+      this.taskData.description = value
     },
   },
 }
@@ -107,6 +109,7 @@ export default {
   display: block;
   width: 100%;
 }
+
 .checkbox_con {
   display: flex;
   justify-content: flex-start;

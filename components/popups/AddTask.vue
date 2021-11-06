@@ -3,7 +3,7 @@
     <button class="button_nav" @click="changePopup">Dodaj zadanie</button>
     <Popup :show-popup="showPopup" @clicked="changePopup">
       <div class="add_task_con">
-        <CenterContainer>
+        <CenterContainer :previewBox="previewBox">
           <h2 class="green_header">Wprowadź dane.</h2>
           <FormTask @clicked="changePopup"></FormTask>
         </CenterContainer>
@@ -16,6 +16,7 @@ export default {
   data() {
     return {
       showPopup: false,
+      previewBox: true,
     }
   },
   computed: {

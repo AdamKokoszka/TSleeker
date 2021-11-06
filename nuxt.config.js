@@ -39,7 +39,10 @@ export default {
   css: ['~/assets/style.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [{ src: '@/plugins/vue-awesome-swiper', mode: 'client' }],
+  plugins: [
+    { src: '@/plugins/vue-awesome-swiper', mode: 'client' },
+    { src: '@/plugins/Tiptap.js' },
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: {
