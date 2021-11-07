@@ -8,15 +8,8 @@
         required
       />
       <div class="editor_con">
-        <Editor :edit="true" required @clicked="updateEditor" />
+        <Editor :edit="true" @clicked="updateEditor" />
       </div>
-      <!-- <textarea
-        v-model="taskData.description"
-        type="text"
-        placeholder="Opis"
-        required
-        rows="4"
-      ></textarea> -->
       <div class="split_2">
         <input
           v-model="taskData.end_date"

@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ box_con: true, preview_box: previewBox }">
+  <div :class="{ box_con: true, preview_box: previewBox, add_task: addTask }">
     <slot></slot>
   </div>
 </template>
@@ -7,6 +7,10 @@
 export default {
   props: {
     previewBox: {
+      type: Boolean,
+      default: false,
+    },
+    addTask: {
       type: Boolean,
       default: false,
     },
@@ -23,6 +27,14 @@ export default {
   border-radius: 20px;
 }
 .preview_box {
+  min-width: 1000px;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  /* background-color: #fff; */
+  /* border: 3px solid var(--color-gray-light); */
+}
+.add_task {
   min-width: 1000px;
   width: 50%;
   margin-left: auto;

@@ -58,7 +58,6 @@ p {
 a {
   text-decoration: none;
 }
-
 .fade_in_out-enter-active,
 .fade_in_out-leave-active {
   transition: opacity 0.3s;
@@ -288,4 +287,10 @@ a {
 }
 .el_tiptap.prev .el-tiptap-editor__menu-bubble {
   display: none;
+}
+.el-tiptap-editor__content hr {
+  height: 2px;
+  border: none;
+  background-color: var(--color-gray-dark);
+  border-bottom: 1px solid var(--color-gray-light);
 }

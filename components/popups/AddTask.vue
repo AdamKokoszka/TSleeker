@@ -3,7 +3,7 @@
     <button class="button_nav" @click="changePopup">Dodaj zadanie</button>
     <Popup :show-popup="showPopup" @clicked="changePopup">
       <div class="add_task_con">
-        <CenterContainer :previewBox="previewBox">
+        <CenterContainer :add-task="true">
           <h2 class="green_header">Wprowadź dane.</h2>
           <FormTask @clicked="changePopup"></FormTask>
         </CenterContainer>
