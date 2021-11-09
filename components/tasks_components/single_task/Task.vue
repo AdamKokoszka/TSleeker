@@ -20,6 +20,7 @@
         :priority="task.priority"
         :delay="task.delay || null"
       ></TaskInfoBar>
+      <EditTask :can-edit="canEdit" :task="task"></EditTask>
     </div>
   </div>
 </template>
@@ -34,14 +35,22 @@ export default {
   data() {
     return {}
   },
+  computed: {
+    canEdit() {
+      if (this.task.creator === this.$fire.auth.currentUser.email) return true
+      return false
+    },
+  },
   methods: {
     CompleteTask() {
-      this.toDelate()
-    },
-    toDelate() {
+      // this.toDelate()
       this.$store.dispatch('deleteTask', this.task.id)
     },
+    // toDelate() {
+    //   this.$store.dispatch('deleteTask', this.task.id)
+    // },
     changePopup() {
+      console.log('Click task!')
       this.$store.commit('setCurrentTask', this.task)
     },
   },

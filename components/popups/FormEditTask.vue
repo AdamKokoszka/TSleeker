@@ -8,7 +8,11 @@
         required
       />
       <div class="editor_con">
-        <Editor :edit="true" @clicked="updateEditor" />
+        <Editor
+          :edit="true"
+          :description="task.description"
+          @clicked="updateEditor"
+        />
       </div>
       <div class="split_2">
         <input
@@ -49,13 +53,19 @@
 </template>
 <script>
 export default {
+  props: {
+    task: {
+      type: Object,
+      default: () => {},
+    },
+  },
   data() {
     return {
       taskData: {
-        header: '',
-        description: '',
-        priority: false,
-        end_date: '',
+        header: this.task.header,
+        description: this.task.description,
+        priority: this.task.priority,
+        end_date: this.task.end_date,
         creator: this.$fire.auth.currentUser.email,
       },
       select_user:
@@ -76,6 +86,8 @@ export default {
     },
   },
   created() {
+    console.log('this.task.description:', this.task.description)
+    console.log('this.task: ', this.task)
     this.allMembers = this.$store.getters.getMembers
   },
   methods: {
