@@ -2,7 +2,6 @@
   <div>
     <!-- <transition name="fade_in_out" @after-leave="toDelate"> -->
     <div
-      v-if="!hidden"
       :class="{
         task_box: true,
         blue_bg: task.priority,
@@ -22,10 +21,6 @@
         :delay="task.delay || null"
       ></TaskInfoBar>
     </div>
-    <!-- </transition> -->
-    <Popup :show-popup="showPopup" @clicked="changePopup">
-      <PopupTask :task="task"></PopupTask>
-    </Popup>
   </div>
 </template>
 <script>
@@ -37,23 +32,17 @@ export default {
     },
   },
   data() {
-    return {
-      hidden: false,
-      showPopup: false,
-      delate: false,
-    }
+    return {}
   },
   methods: {
     CompleteTask() {
-      // this.delate = true
-      // this.hidden = true
       this.toDelate()
     },
     toDelate() {
       this.$store.dispatch('deleteTask', this.task.id)
     },
     changePopup() {
-      this.showPopup = !this.showPopup
+      this.$store.commit('setCurrentTask', this.task)
     },
   },
 }

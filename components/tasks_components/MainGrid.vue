@@ -17,6 +17,9 @@
       <div slot="button-prev" class="swiper_button swiper_button_prev"></div>
       <div slot="button-next" class="swiper_button swiper_button_next"></div>
     </div>
+    <Popup :show-popup="showPopupTask" @clicked="changePopup">
+      <PopupTask :task="getterTask"></PopupTask>
+    </Popup>
   </div>
   <div v-else-if="isError" class="board_con">
     <div class="loading_con">
@@ -66,6 +69,23 @@ export default {
       },
     }
   },
+  computed: {
+    getterTask() {
+      const task = this.$store.getters.getCurrentTask
+      const taskLength = Object.keys(task).length
+      if (taskLength > 0) {
+        return task
+      }
+      return {}
+    },
+    showPopupTask() {
+      const taskLength = Object.keys(this.getterTask).length
+      if (taskLength > 0) {
+        return true
+      }
+      return false
+    },
+  },
   mounted() {
     this.$fire.firestore
       .collection('users')
@@ -101,6 +121,7 @@ export default {
         }
       )
   },
+
   methods: {
     segregationTasks() {
       for (let i = 0; i < this.colmunCount; i++) {
@@ -148,6 +169,9 @@ export default {
         this.$store.dispatch('getAdminsAccount')
         this.$store.dispatch('getUsersAccount')
       }
+    },
+    changePopup() {
+      this.$store.commit('setCurrentTask', {})
     },
   },
 }

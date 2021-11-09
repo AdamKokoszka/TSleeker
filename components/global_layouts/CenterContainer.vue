@@ -27,16 +27,15 @@ export default {
   border-radius: 20px;
 }
 .preview_box {
-  min-width: 1000px;
-  width: 50%;
+  width: 1000px;
   margin-left: auto;
   margin-right: auto;
   /* background-color: #fff; */
   /* border: 3px solid var(--color-gray-light); */
 }
 .add_task {
-  min-width: 1000px;
-  width: 50%;
+  width: 1000px;
+  /* width: 50%; */
   margin-left: auto;
   margin-right: auto;
 }

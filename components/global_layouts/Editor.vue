@@ -27,6 +27,7 @@ import {
   BulletList, // use with ListItem
   OrderedList, // use with ListItem
   TextAlign,
+  // Fullscreen,
   HorizontalRule,
   History,
   TextColor,
@@ -66,6 +67,7 @@ export default {
       new BulletList(),
       new OrderedList(),
       new HorizontalRule(),
+      // new Fullscreen(),
       new History(),
     ],
 
