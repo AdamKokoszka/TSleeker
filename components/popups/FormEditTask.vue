@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form class="form_main" @submit.prevent="addTask">
+    <form class="form_main" @submit.prevent="editTask">
       <input
         v-model="taskData.header"
         type="text"
@@ -17,9 +17,8 @@
       <div class="split_2">
         <input
           v-model="taskData.end_date"
-          type="text"
+          type="date"
           placeholder="Data"
-          onfocus="(this.type='date')"
           required
         />
         <select
@@ -44,7 +43,15 @@
           >Zadanie priorytetowe</label
         >
       </div>
-      <button type="submit" class="button_green">Dodaj zadanie!</button>
+      <button type="submit" class="button_green">Edytuj zadanie!</button>
+      <transition name="fade_in_out">
+        <p
+          v-if="snackbarText"
+          :class="{ error: true, correct_user_data: correctUserData }"
+        >
+          {{ snackbarText }}
+        </p></transition
+      >
     </form>
     <div class="close_con">
       <img src="~assets/close.png" alt="Close" />
@@ -65,13 +72,15 @@ export default {
         header: this.task.header,
         description: this.task.description,
         priority: this.task.priority,
-        end_date: this.task.end_date,
+        end_date: '',
         creator: this.$fire.auth.currentUser.email,
       },
-      select_user:
-        this.$store.getters.getPermissions === 'user'
-          ? this.$store.getters.getUser.email
-          : '',
+      select_user: this.$store.getters.getUser.email,
+      // select_user:
+      //   this.$store.getters.getPermissions === 'user'
+      //     ? this.$store.getters.getUser.email
+      //     : '',
+      snackbarText: '',
       clockedCheckbox: false,
       allMembers: [],
       disabled: 'disabled',
@@ -86,22 +95,57 @@ export default {
     },
   },
   created() {
-    console.log('this.task.description:', this.task.description)
-    console.log('this.task: ', this.task)
+    // Convert getting date to 'rrrr-mm-dd' form
+    const covDate = new Date(this.task.end_date.seconds * 1000)
+    let d = '' + covDate.getDate()
+    if (d < 2) {
+      d = '0' + d
+    }
+    let m = '' + (covDate.getMonth() + 1)
+    if (m < 2) {
+      m = '0' + m
+    }
+    const r = covDate.getFullYear()
+    const displayDate = `${r}-${m}-${d}`
+    this.taskData.end_date = displayDate
+
     this.allMembers = this.$store.getters.getMembers
   },
   methods: {
-    addTask() {
+    editTask() {
+      this.snackbarText = ''
+
       const getDate = new Date(this.taskData.end_date)
       this.taskData.end_date = getDate
 
+      this.$store.dispatch('deleteTask', this.task.id)
       const tasksHandler = this.$fire.firestore
         .collection('users')
         .doc(this.select_user)
         .collection('tasks')
         .doc()
-      tasksHandler.set(this.taskData)
-      this.$emit('clicked')
+      tasksHandler
+        .set(this.taskData)
+        .then(() => {
+          // this.correctUserData = true
+          // this.snackbarText = 'Zaktualizowano dane użytkownika!'
+          this.$store.commit('setCurrentEditTask', {})
+        })
+        .catch((error) => {
+          const errorText = this.errorTranslator.find(
+            (ell) => ell.code === error.code
+          )
+          if (errorText) {
+            this.snackbarText = errorText.text
+          } else {
+            this.snackbarText = 'Podane dane zawierają błąd! Spróbuj ponownie.'
+          }
+        })
+
+      setTimeout(() => {
+        this.snackbarText = ''
+        this.correctUserData = false
+      }, 5000)
     },
     updateEditor(value) {
       this.taskData.description = value

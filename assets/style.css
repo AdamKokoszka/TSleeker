@@ -284,7 +284,7 @@ a {
 .invisible-scrollbar::-webkit-scrollbar {
   display: none;
 }
-.el_tiptap.prev .el-tiptap-editor__menu-bubble {
+.el_tiptap .el-tiptap-editor__menu-bubble {
   display: none;
 }
 .el-tiptap-editor__content hr {

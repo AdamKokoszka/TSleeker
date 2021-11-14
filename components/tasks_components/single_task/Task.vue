@@ -50,7 +50,6 @@ export default {
     //   this.$store.dispatch('deleteTask', this.task.id)
     // },
     changePopup() {
-      console.log('Click task!')
       this.$store.commit('setCurrentTask', this.task)
     },
   },

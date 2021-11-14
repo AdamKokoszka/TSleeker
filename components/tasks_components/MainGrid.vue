@@ -17,9 +17,18 @@
       <div slot="button-prev" class="swiper_button swiper_button_prev"></div>
       <div slot="button-next" class="swiper_button swiper_button_next"></div>
     </div>
-    <Popup :show-popup="showPopupTask" @clicked="changePopup">
+    <MainPopups></MainPopups>
+    <!-- <Popup :show-popup="showPopupTask" @clicked="changePopup">
       <PopupTask :task="getterTask"></PopupTask>
     </Popup>
+    <Popup :show-popup="showPopupEditTask" @clicked="changePopup2">
+      <div class="add_task_con">
+        <CenterContainer :add-task="true">
+          <h2 class="green_header">Wprowadź dane.</h2>
+          <FormEditTask :task="getterEditTask"></FormEditTask>
+        </CenterContainer>
+      </div>
+    </Popup> -->
   </div>
   <div v-else-if="isError" class="board_con">
     <div class="loading_con">
@@ -70,21 +79,36 @@ export default {
     }
   },
   computed: {
-    getterTask() {
-      const task = this.$store.getters.getCurrentTask
-      const taskLength = Object.keys(task).length
-      if (taskLength > 0) {
-        return task
-      }
-      return {}
-    },
-    showPopupTask() {
-      const taskLength = Object.keys(this.getterTask).length
-      if (taskLength > 0) {
-        return true
-      }
-      return false
-    },
+    // getterTask() {
+    //   const task = this.$store.getters.getCurrentTask
+    //   const taskLength = Object.keys(task).length
+    //   if (taskLength > 0) {
+    //     return task
+    //   }
+    //   return {}
+    // },
+    // getterEditTask() {
+    //   const task = this.$store.getters.getCurrentEditTask
+    //   const taskLength = Object.keys(task).length
+    //   if (taskLength > 0) {
+    //     return task
+    //   }
+    //   return {}
+    // },
+    // showPopupTask() {
+    //   const taskLength = Object.keys(this.getterTask).length
+    //   if (taskLength > 0) {
+    //     return true
+    //   }
+    //   return false
+    // },
+    // showPopupEditTask() {
+    //   const taskLength = Object.keys(this.getterEditTask).length
+    //   if (taskLength > 0) {
+    //     return true
+    //   }
+    //   return false
+    // },
   },
   mounted() {
     this.$fire.firestore
@@ -169,9 +193,6 @@ export default {
         this.$store.dispatch('getAdminsAccount')
         this.$store.dispatch('getUsersAccount')
       }
-    },
-    changePopup() {
-      this.$store.commit('setCurrentTask', {})
     },
   },
 }

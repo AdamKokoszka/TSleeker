@@ -3,7 +3,7 @@
     v-model="content"
     :extensions="extensions"
     :content="content"
-    :class="{ el_tiptap: true, prev: !edit }"
+    class="el_tiptap"
     :readonly="edit ? false : true"
     :show-menubar="edit ? true : false"
     :char-counter-count="false"
@@ -57,11 +57,16 @@ export default {
       new Text(),
       new Paragraph(),
       new Heading({ level: [2, 3] }),
-      new Bold({ bubble: true }),
-      new Underline({ bubble: true }),
-      new Strike({ bubble: true }),
-      new TextColor({ bubble: true }),
-      new Link({ bubble: true }),
+      new Bold(),
+      new Underline(),
+      new Strike(),
+      new TextColor(),
+      new Link(),
+      // new Bold({ bubble: true }),
+      // new Underline({ bubble: true }),
+      // new Strike({ bubble: true }),
+      // new TextColor({ bubble: true }),
+      // new Link({ bubble: true }),
       new TextAlign(),
       new ListItem(),
       new BulletList(),

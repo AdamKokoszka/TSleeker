@@ -16,6 +16,7 @@ const getDefaultState = () => {
     adminsAccount: [],
     usersAccount: [],
     currentTask: {},
+    currentEditTask: {},
   }
 }
 
@@ -46,6 +47,9 @@ const getters = {
   getCurrentTask(state) {
     return state.currentTask
   },
+  getCurrentEditTask(state) {
+    return state.currentEditTask
+  },
 }
 
 const mutations = {
@@ -72,6 +76,9 @@ const mutations = {
   },
   setCurrentTask(state, currentTask) {
     state.currentTask = currentTask
+  },
+  setCurrentEditTask(state, currentEditTask) {
+    state.currentEditTask = currentEditTask
   },
   resetState(state) {
     Object.assign(state, getDefaultState())

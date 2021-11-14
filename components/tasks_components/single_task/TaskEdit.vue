@@ -1,9 +1,9 @@
 <template>
   <img
     src="~/assets/edit.png"
-    alt="Img circle"
+    alt="Img complete task"
     class="mark"
-    title="Zadanie wykonane!"
+    title="Edytuj zadanie!"
     @click="CompleteTask"
     @click.stop
   />
