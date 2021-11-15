@@ -7,6 +7,16 @@
             Jestes zalogowany jako: {{ userName }}
           </p>
         </transition>
+        <transition name="fade_in_out">
+          <p
+            v-if="
+              $store.getters.getPrevUser &&
+              $store.getters.getPrevUser !== $fire.auth.currentUser.email
+            "
+          >
+            Podgląd zadań użytkownika: {{ $store.getters.getPrevUser }}
+          </p>
+        </transition>
       </div>
       <div class="nav_item">
         <img src="~/assets/logo.png" alt="Slicker Logo" class="logo_slicker" />
@@ -19,6 +29,12 @@
         <AddUser
           v-if="$store.getters.getPermissions === 'super_admin'"
         ></AddUser>
+        <UserTasks
+          v-if="
+            $store.getters.getPermissions === 'super_admin' ||
+            $store.getters.getPermissions === 'admin'
+          "
+        ></UserTasks>
         <AddTask
           v-if="
             $store.getters.getPermissions === 'super_admin' ||
@@ -73,7 +89,9 @@ export default {
   align-items: center;
 }
 .nav_item:first-of-type {
-  justify-content: flex-start;
+  flex-direction: column;
+  justify-content: center;
+  align-items: baseline;
 }
 .nav_item:last-of-type {
   justify-content: flex-end;

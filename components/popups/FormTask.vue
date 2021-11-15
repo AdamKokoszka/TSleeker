@@ -89,6 +89,7 @@ export default {
         .collection('tasks')
         .doc()
       tasksHandler.set(this.taskData)
+      this.$store.commit('setPrevUser', this.select_user)
       this.$emit('clicked')
     },
     updateEditor(value) {

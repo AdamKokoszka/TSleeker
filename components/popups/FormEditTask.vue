@@ -98,11 +98,11 @@ export default {
     // Convert getting date to 'rrrr-mm-dd' form
     const covDate = new Date(this.task.end_date.seconds * 1000)
     let d = '' + covDate.getDate()
-    if (d < 2) {
+    if (d.length < 2) {
       d = '0' + d
     }
     let m = '' + (covDate.getMonth() + 1)
-    if (m < 2) {
+    if (m.length < 2) {
       m = '0' + m
     }
     const r = covDate.getFullYear()

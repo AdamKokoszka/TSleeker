@@ -9,6 +9,7 @@
 const getDefaultState = () => {
   return {
     user: null,
+    prevUser: null,
     username: null,
     tasks: [],
     permissions: '',
@@ -25,6 +26,9 @@ const state = getDefaultState()
 const getters = {
   getUser(state) {
     return state.user
+  },
+  getPrevUser(state) {
+    return state.prevUser
   },
   getUserName(state) {
     return state.username
@@ -55,6 +59,9 @@ const getters = {
 const mutations = {
   SET_USER(state, user) {
     state.user = user
+  },
+  setPrevUser(state, prevUser) {
+    state.prevUser = prevUser
   },
   setUserName(state, username) {
     state.username = username

@@ -18,17 +18,6 @@
       <div slot="button-next" class="swiper_button swiper_button_next"></div>
     </div>
     <MainPopups></MainPopups>
-    <!-- <Popup :show-popup="showPopupTask" @clicked="changePopup">
-      <PopupTask :task="getterTask"></PopupTask>
-    </Popup>
-    <Popup :show-popup="showPopupEditTask" @clicked="changePopup2">
-      <div class="add_task_con">
-        <CenterContainer :add-task="true">
-          <h2 class="green_header">Wprowadź dane.</h2>
-          <FormEditTask :task="getterEditTask"></FormEditTask>
-        </CenterContainer>
-      </div>
-    </Popup> -->
   </div>
   <div v-else-if="isError" class="board_con">
     <div class="loading_con">
@@ -79,36 +68,14 @@ export default {
     }
   },
   computed: {
-    // getterTask() {
-    //   const task = this.$store.getters.getCurrentTask
-    //   const taskLength = Object.keys(task).length
-    //   if (taskLength > 0) {
-    //     return task
-    //   }
-    //   return {}
-    // },
-    // getterEditTask() {
-    //   const task = this.$store.getters.getCurrentEditTask
-    //   const taskLength = Object.keys(task).length
-    //   if (taskLength > 0) {
-    //     return task
-    //   }
-    //   return {}
-    // },
-    // showPopupTask() {
-    //   const taskLength = Object.keys(this.getterTask).length
-    //   if (taskLength > 0) {
-    //     return true
-    //   }
-    //   return false
-    // },
-    // showPopupEditTask() {
-    //   const taskLength = Object.keys(this.getterEditTask).length
-    //   if (taskLength > 0) {
-    //     return true
-    //   }
-    //   return false
-    // },
+    prevUser() {
+      return this.$store.getters.getPrevUser
+    },
+  },
+  watch: {
+    prevUser(prevUser) {
+      this.getUserTasks(prevUser)
+    },
   },
   mounted() {
     this.$fire.firestore
@@ -121,32 +88,37 @@ export default {
         this.permAdmin(this.permissions)
       })
 
-    this.$fire.firestore
-      .collection('users')
-      .doc(this.$fire.auth.currentUser.email)
-      .collection('tasks')
-      .orderBy('end_date', 'asc')
-      .onSnapshot(
-        (snapshot) => {
-          const tasks = []
-          snapshot.docs.forEach((doc) => {
-            const docObject = doc.data()
-            docObject.id = doc.id
-            tasks.push(docObject)
-          })
-          this.$store.commit('setTasks', tasks)
-          this.tasks = this.$store.getters.getTasks
-          this.isLoaded = true
-          this.taskGroup = []
-          this.segregationTasks()
-        },
-        (error) => {
-          console.log(error)
-        }
-      )
+    this.getUserTasks()
   },
 
   methods: {
+    getUserTasks(prevUser) {
+      const user = prevUser || this.$fire.auth.currentUser.email
+      console.log('user:', user)
+      this.$fire.firestore
+        .collection('users')
+        .doc(user)
+        .collection('tasks')
+        .orderBy('end_date', 'asc')
+        .onSnapshot(
+          (snapshot) => {
+            const tasks = []
+            snapshot.docs.forEach((doc) => {
+              const docObject = doc.data()
+              docObject.id = doc.id
+              tasks.push(docObject)
+            })
+            this.$store.commit('setTasks', tasks)
+            this.tasks = this.$store.getters.getTasks
+            this.isLoaded = true
+            this.taskGroup = []
+            this.segregationTasks()
+          },
+          (error) => {
+            console.log(error)
+          }
+        )
+    },
     segregationTasks() {
       for (let i = 0; i < this.colmunCount; i++) {
         const findTasks = this.tasks.filter((task) => {
