@@ -105,6 +105,7 @@ a {
   border: 0;
   border-top: 2px solid transparent;
   border-bottom: 2px solid transparent;
+  background-color: transparent;
   color: var(--color-green-dark);
   font-size: 13px;
   font-weight: 700;
@@ -124,6 +125,40 @@ a {
 .button_nav:hover,
 .button_nav:focus {
   border-bottom: 2px solid var(--color-green-dark);
+}
+
+/* Moblie navigation styles */
+.mobile_menu {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  cursor: pointer;
+  display: none;
+}
+.mobile_menu .bar1,
+.mobile_menu .bar2,
+.mobile_menu .bar3 {
+  width: 35px;
+  height: 5px;
+  background-color: var(--color-green-dark);
+  margin: 6px 0;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 5px;
+}
+
+.change .bar1 {
+  -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+  transform: rotate(-45deg) translate(-9px, 6px);
+}
+
+.change .bar2 {
+  opacity: 0;
+}
+
+.change .bar3 {
+  -webkit-transform: rotate(45deg) translate(-8px, -8px);
+  transform: rotate(45deg) translate(-8px, -8px);
 }
 
 /* Form styles */

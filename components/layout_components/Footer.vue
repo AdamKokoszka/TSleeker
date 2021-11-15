@@ -33,4 +33,18 @@
 .footer a {
   color: #fff;
 }
+@media screen and (max-width: 850px) {
+  .footer {
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 5px;
+  }
+  .footer p {
+    font-size: 12px;
+    text-align: center;
+  }
+  .footer p:first-of-type {
+    margin-bottom: 5px;
+  }
+}
 </style>

@@ -58,11 +58,32 @@ export default {
       pomDate: '',
 
       swiperOption: {
-        slidesPerView: 7,
-        slidesPerGroup: 2,
+        slidesPerView: 1,
+        slidesPerGroup: 1,
         navigation: {
           nextEl: '.swiper_button_next',
           prevEl: '.swiper_button_prev',
+        },
+        breakpoints: {
+          1600: {
+            slidesPerView: 7,
+          },
+          1300: {
+            slidesPerView: 6,
+          },
+          1120: {
+            slidesPerView: 5,
+          },
+          920: {
+            slidesPerView: 4,
+          },
+          740: {
+            slidesPerView: 3,
+            slidesPerGroup: 2,
+          },
+          500: {
+            slidesPerView: 2,
+          },
         },
       },
     }
