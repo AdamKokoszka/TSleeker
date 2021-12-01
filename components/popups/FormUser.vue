@@ -71,7 +71,7 @@ export default {
       hideEye: false,
       select_user: '',
       select_perm: '',
-      snackbarText: 'sg fdg df gdf gdfg ',
+      snackbarText: '',
       allAdmin: [],
       correctUserData: false,
       disabled: 'disabled',
