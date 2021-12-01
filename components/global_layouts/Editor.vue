@@ -93,7 +93,7 @@ export default {
   },
 }
 </script>
-<style scoped>
+<style>
 .el_tiptap {
   border-radius: 5px;
 }
@@ -102,5 +102,10 @@ export default {
 }
 .el_tiptap ::-webkit-scrollbar {
   background: #fff;
+}
+@media screen and (max-width: 500px) {
+  .editor_con .el-tiptap-editor__command-button {
+    width: 32px;
+  }
 }
 </style>

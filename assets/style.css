@@ -12,6 +12,8 @@
   --color-red-light: #ee3434;
   --color-red-lighter: #ffd1d1;
 
+  --app-height: 100vh;
+
   /* --color-task-1: #84e3c8;
   --color-task-2: #a8e6cf;
   --color-task-3: #dcedc1;
@@ -125,6 +127,14 @@ a {
 .button_nav:hover,
 .button_nav:focus {
   border-bottom: 2px solid var(--color-green-dark);
+}
+
+@media screen and (max-width: 1023px) {
+  .button_nav {
+    font-size: 18px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
 }
 
 /* Moblie navigation styles */
@@ -293,6 +303,13 @@ a {
 .editor_con .el-tiptap-editor__with-title-placeholder:nth-child(2):before {
   color: #7d7d7d;
 }
+
+@media screen and (max-width: 1023px) {
+  .form_main .editor_con > div {
+    max-height: calc(100vh - 450px);
+  }
+}
+
 .split_2 {
   display: flex;
   grid-gap: 10px;

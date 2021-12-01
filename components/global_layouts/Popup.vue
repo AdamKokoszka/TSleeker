@@ -39,7 +39,7 @@ export default {
   /* width: 100%; */
   width: 100vw;
   /* height: 100%; */
-  height: 100vh;
+  height: var(--app-height);
   background-color: rgba(0, 0, 0, 0.438);
   /* z-index: 11; */
   z-index: 600;
