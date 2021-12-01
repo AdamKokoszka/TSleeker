@@ -122,7 +122,6 @@ export default {
   methods: {
     getUserTasks(prevUser) {
       const user = prevUser || this.$fire.auth.currentUser.email
-      console.log('user:', user)
       this.$fire.firestore
         .collection('users')
         .doc(user)

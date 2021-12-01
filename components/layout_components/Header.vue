@@ -47,7 +47,7 @@
           <button
             v-if="$store.getters.getUser"
             class="button_nav"
-            @click="showPopup = false"
+            @click="changePopupAndLogout"
           >
             Wyloguj
           </button>
@@ -130,7 +130,7 @@ export default {
       this.showPopup = !this.showPopup
     },
     changePopupAndLogout() {
-      this.showPopup = !this.showPopup
+      this.showPopup = false
       this.$router.push('/auth/signout')
     },
   },
