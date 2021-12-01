@@ -47,7 +47,7 @@
           <button
             v-if="$store.getters.getUser"
             class="button_nav"
-            @click="changePopupAndLogout"
+            @click="showPopup = false"
           >
             Wyloguj
           </button>
