@@ -34,8 +34,14 @@
 </template>
 <script>
 import { directive } from 'vue-awesome-swiper'
+import Column from './Column.vue'
+import MainPopups from './MainPopups.vue'
 export default {
   name: 'Slider',
+  components: {
+    Column,
+    MainPopups,
+  },
   directives: {
     swiper: directive,
   },

@@ -76,22 +76,24 @@ export default {
       correctUserData: false,
       disabled: 'disabled',
       errorTranslator,
+      testinfo: '',
     }
   },
   created() {
     this.allAdmin = this.$store.getters.getAdmins
   },
   methods: {
-    addUser() {
+    dodaj(one, two) {
+      return one + two
+    },
+    async addUser() {
       this.snackbarText = ''
       const that = this
 
-      const secondaryApp = firebase.initializeApp(
-        process.env.secondConfig,
-        'Secondary'
-      )
+      const secondConfig = process.env.secondConfig
+      const secondaryApp = firebase.initializeApp(secondConfig, 'Secondary')
 
-      secondaryApp
+      await secondaryApp
         .auth()
         .createUserWithEmailAndPassword(
           this.userData.email,
@@ -130,7 +132,8 @@ export default {
           if (errorText) {
             that.snackbarText = errorText.text
           } else {
-            that.snackbarText = 'Podane dane zawierają błąd! Spróbuj ponownie.'
+            that.snackbarText = error
+            // that.snackbarText = 'Podane dane zawierają błąd! Spróbuj ponownie.'
           }
           secondaryApp.delete()
         })

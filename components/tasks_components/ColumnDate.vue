@@ -15,7 +15,9 @@ export default {
   props: {
     firstDayDate: {
       type: Date,
-      default: 0,
+      default() {
+        return new Date()
+      },
     },
     itemNum: {
       type: Number,

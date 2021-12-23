@@ -11,12 +11,6 @@
 
 <script>
 export default {
-  props: {
-    task: {
-      type: Object,
-      default: () => {},
-    },
-  },
   methods: {
     CompleteTask() {
       this.$emit('clicked')

@@ -14,7 +14,14 @@ export default {
   props: {
     task: {
       type: Object,
-      default: () => {},
+      default: () => ({
+        id: '',
+        priority: false,
+        delay: false,
+        header: '',
+        description: '',
+        creator: '',
+      }),
     },
   },
 }

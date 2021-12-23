@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <transition name="fade_in_out" @after-leave="toDelate"> -->
     <div
       :class="{
         task_box: true,
@@ -25,11 +24,32 @@
   </div>
 </template>
 <script>
+import EditTask from '../../popups/EditTask.vue'
+import TaskCheckmark from './TaskCheckmark.vue'
+import TaskHeader from './TaskHeader.vue'
+import TaskColorBar from './TaskColorBar.vue'
+import TaskDescription from './TaskDescription.vue'
+import TaskInfoBar from './TaskInfoBar.vue'
 export default {
+  components: {
+    TaskCheckmark,
+    TaskHeader,
+    TaskColorBar,
+    TaskDescription,
+    TaskInfoBar,
+    EditTask,
+  },
   props: {
     task: {
       type: Object,
-      default: () => {},
+      default: () => ({
+        id: '',
+        priority: false,
+        delay: false,
+        header: '',
+        description: '',
+        creator: '',
+      }),
     },
   },
   data() {
@@ -37,18 +57,17 @@ export default {
   },
   computed: {
     canEdit() {
-      if (this.task.creator === this.$fire.auth.currentUser.email) return true
+      if (this.$store.getters.getUser) {
+        if (this.task.creator === this.$store.getters.getUser.email) return true
+        return false
+      }
       return false
     },
   },
   methods: {
     CompleteTask() {
-      // this.toDelate()
       this.$store.dispatch('deleteTask', this.task.id)
     },
-    // toDelate() {
-    //   this.$store.dispatch('deleteTask', this.task.id)
-    // },
     changePopup() {
       this.$store.commit('setCurrentTask', this.task)
     },

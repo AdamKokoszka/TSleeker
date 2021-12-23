@@ -1,24 +1,30 @@
 <template>
-  <div :class="{ col: true, color_week: isWeekend, hover_last: itemNum === 6 }">
-    <Date :first-day-date="firstDayDate" :item-num="itemNum" />
+  <div :class="{ col: true, color_week: isWeekend }">
+    <ColumnDate :first-day-date="firstDayDate" :item-num="itemNum" />
     <div v-if="taskAsADay.length <= 0" class="task_con">
       <p class="empty_task">Brak zadań na ten dzień...</p>
     </div>
     <div v-else class="task_con">
-      <!-- <transition-group name="fade_in_out"> -->
       <div v-for="(task, index) in taskAsADay" :key="index">
         <Task :task="task" />
       </div>
-      <!-- </transition-group> -->
     </div>
   </div>
 </template>
 <script>
+import ColumnDate from './ColumnDate.vue'
+import Task from './single_task/Task.vue'
 export default {
+  components: {
+    ColumnDate,
+    Task,
+  },
   props: {
     firstDayDate: {
       type: Date,
-      default: 0,
+      default() {
+        return new Date()
+      },
     },
     itemNum: {
       type: Number,
@@ -26,7 +32,7 @@ export default {
     },
     taskAsADay: {
       type: Array,
-      default: () => {},
+      default: () => [],
     },
   },
   data() {
@@ -78,12 +84,5 @@ export default {
 }
 .arrow_r_con img:hover {
   opacity: 1;
-}
-.hover_last:hover .arrow_r_con {
-  transform: translateX(-50px);
-  z-index: 10;
-}
-.hover_last:hover .arrow_r_con img {
-  opacity: 0.5;
 }
 </style>

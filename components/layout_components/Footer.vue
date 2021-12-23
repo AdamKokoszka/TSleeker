@@ -1,7 +1,7 @@
 <template>
   <div class="footer">
     <p>
-      &copy; {{ new Date().getFullYear() }} T-sleeker. Aplikacja wpomagająca
+      &copy; {{ new Date().getFullYear() }} T-sleeker. Aplikacja wspomagająca
       planowanie i realizację zadań.
     </p>
     <p>
