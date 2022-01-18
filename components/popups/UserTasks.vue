@@ -14,7 +14,15 @@
   </div>
 </template>
 <script>
+import Popup from '../global_layouts/Popup.vue'
+import CenterContainer from '../global_layouts/CenterContainer.vue'
+import FormUserTasks from '../popups/FormUserTasks.vue'
 export default {
+  components: {
+    Popup,
+    CenterContainer,
+    FormUserTasks,
+  },
   data() {
     return {
       showPopup: false,

@@ -1,44 +1,6 @@
-// import { mount } from '@vue/test-utils'
-// import firebase from '@firebase/rules-unit-testing'
-// import Task from '@/components/popups/FormUser.vue'
 import 'firebase'
 import '@firebase/auth'
 import '@firebase/firestore'
-// import '@nuxtjs/firebase'
-
-// const MY_PROJECT_ID = 'test-nuxt-auth-52d70'
-// const myAuth = { uid: '2VjHgUZnkrWFVvIqTlG6TanIZ4k2', email: 'admin@admin.pl' }
-
-// describe('Testing task', () => {
-//   test('Test task', async () => {
-//     const wrapper = mount(Task, {
-//       propsData: {
-//         task: {
-//           creator: 'admin@g.pl',
-//           description: 'description 123',
-//           end_date: 'December 14, 2021 at 1:00:00 AM UTC+1',
-//           header: 'Naglowek',
-//           priority: true,
-//         },
-//       },
-//     })
-
-//     const db = firebase
-//       .initializeTestApp({ projectId: MY_PROJECT_ID, auth: myAuth })
-//       .firestore()
-//     const testDoc = db.collection('readonly').doc('users')
-//     await firebase.assertSucceeds(testDoc.get())
-//     const addTask = jest.fn()
-
-//     wrapper.setMethods({
-//       addTask,
-//     })
-
-//     wrapper.find('button').trigger('click')
-//     expect(addTask).toHaveBeenCalled()
-//     // expect(wrapper.isVueInstance()).toBeTruthy()
-//   })
-// })
 
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
@@ -58,14 +20,8 @@ describe('Form User Methods', () => {
   let store
 
   beforeEach(() => {
-    getters = {
-      // getAdmins: () => ['kokos'],
-    }
-    actions = {
-      // getAdminsAccount: jest.fn(),
-      // getUsersAccount: jest.fn(),
-      // getTeamMembers: jest.fn(),
-    }
+    getters = {}
+    actions = {}
     store = new Vuex.Store({
       getters,
       actions,
@@ -106,12 +62,17 @@ describe('Form User Methods', () => {
     })
 
     const userData = {
-      email: 'kokosznikowsdfsdfsdf@g.pl',
+      email: 'jest@test.com',
       password: 'ZAQ!2wsx',
-      name: 'Kokos',
+      name: 'Testowanie aplikacji',
     }
+    const secondConfig = {
+      apiKey: 'AIzaSyBNyrl-fCzYWBtjozf09TeSQGm4_auTcws',
+      authDomain: 'test-nuxt-auth-52d70.firebaseapp.com',
+      databaseURL: 'https://test-nuxt-auth-52d70-default-rtdb.firebaseio.com',
+    }
+    await wrapper.setData({ secondConfig })
 
-    // await wrapper.setData({ snackbarText: 'not empty' })
     await wrapper.setData({ userData })
     await wrapper.setData({ select_perm: 'admin' })
     await wrapper.setData({ select_user: 'admin@admin.pl' })
@@ -119,8 +80,8 @@ describe('Form User Methods', () => {
     await expect(wrapper.vm.allAdmin).toEqual([])
     await wrapper.vm.addUser()
 
-    expect(wrapper.vm.snackbarText).toEqual('Dodano uzytkownika!')
-    // expect(wrapper.vm.snackbarText).toEqual('Dodano uzytkownika!')
-    // expect(wrapper.vm.correctUserData).toBe(true)
+    expect(wrapper.vm.snackbarText).toEqual(
+      'Użytkownik o podanym emailu już istnieje.'
+    )
   })
 })

@@ -7,7 +7,7 @@ describe('Date', () => {
   it('currentDate & numDayText', async () => {
     const wrapper = shallowMount(ColumnDate)
 
-    // new Date('December 17, 2021 03:24:00')
+    // new Date('December 18, 2021 03:24:00')
     const date = staticDate
 
     await wrapper.setProps({
@@ -18,28 +18,24 @@ describe('Date', () => {
       itemNum: 1,
     })
 
-    expect(wrapper.vm.currentDate.getDate()).toBe(18)
+    expect(wrapper.vm.currentDate.getDate()).toBe(19)
 
     await wrapper.setProps({
       itemNum: 3,
     })
 
-    expect(wrapper.vm.currentDate.getDate()).toBe(20)
-    expect(wrapper.vm.numDayText).toBe(20)
+    expect(wrapper.vm.currentDate.getDate()).toBe(21)
+    expect(wrapper.vm.numDayText).toBe(21)
   })
 
-  it('dayOfWeekText & monthOfWeekText', async () => {
-    const wrapper = shallowMount(ColumnDate)
-
-    // new Date('December 17, 2021 03:24:00')
-    const date = staticDate
-
-    await wrapper.setProps({
-      firstDayDate: date,
-    })
-
-    await wrapper.setProps({
-      itemNum: 1,
+  it('dayOfWeekText & monthOfWeekText', () => {
+    const wrapper = shallowMount(ColumnDate, {
+      computed: {
+        currentDate() {
+          // new Date('December 18, 2021 03:24:00')
+          return staticDate
+        },
+      },
     })
 
     expect(wrapper.vm.dayOfWeekText).toBe('Sobota')

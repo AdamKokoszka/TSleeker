@@ -1,6 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
 
-import staticDate from '~/assets/staticDate.js'
 import Column from '@/components/tasks_components/Column.vue'
 
 describe('Column', () => {
@@ -38,18 +37,14 @@ describe('Column', () => {
     expect(wrapper.find('.task_con')).not.toContain('Brak zadań')
   })
 
-  it('isWeekend', async () => {
-    const wrapper = shallowMount(Column)
-
-    // new Date('December 17, 2021 03:24:00')
-    const date = staticDate
-
-    await wrapper.setProps({
-      firstDayDate: date,
-    })
-
-    await wrapper.setProps({
-      itemNum: 1,
+  it('isWeekend', () => {
+    // new Date('December 18, 2021 03:24:00')
+    const wrapper = shallowMount(Column, {
+      computed: {
+        isWeekend() {
+          return true
+        },
+      },
     })
 
     expect(wrapper.vm.isWeekend).toBe(true)

@@ -26,7 +26,6 @@ export default {
       },
     ],
   },
-
   env: {
     secondConfig: {
       apiKey: 'AIzaSyBNyrl-fCzYWBtjozf09TeSQGm4_auTcws',
@@ -61,6 +60,7 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
+    '@nuxtjs/dotenv',
   ],
 
   router: {

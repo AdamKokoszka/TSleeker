@@ -77,21 +77,21 @@ export default {
       disabled: 'disabled',
       errorTranslator,
       testinfo: '',
+      secondConfig: process.env.secondConfig,
     }
   },
   created() {
     this.allAdmin = this.$store.getters.getAdmins
   },
   methods: {
-    dodaj(one, two) {
-      return one + two
-    },
     async addUser() {
       this.snackbarText = ''
       const that = this
 
-      const secondConfig = process.env.secondConfig
-      const secondaryApp = firebase.initializeApp(secondConfig, 'Secondary')
+      const secondaryApp = firebase.initializeApp(
+        this.secondConfig,
+        'Secondary'
+      )
 
       await secondaryApp
         .auth()
@@ -112,10 +112,10 @@ export default {
             permissions: this.select_perm,
             supervisor: this.select_user,
           }
-          this.$fire.firestore
-            .collection('users')
-            .doc(this.userData.email)
-            .set(userData)
+
+          const email = this.userData.email
+          const data = { userData, email }
+          this.$store.commit('setNewUser', data)
 
           this.$store.dispatch('getAdminsAccount')
           this.$store.dispatch('getUsersAccount')
@@ -125,7 +125,6 @@ export default {
           this.allAdmin = this.$store.getters.getAdmins
         })
         .catch(function (error) {
-          console.log('Error obj: ', error)
           const errorText = that.errorTranslator.find(
             (ell) => ell.code === error.code
           )

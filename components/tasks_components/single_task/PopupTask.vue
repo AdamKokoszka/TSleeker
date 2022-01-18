@@ -10,7 +10,11 @@
 </template>
 
 <script>
+import CenterContainer from '../../global_layouts/CenterContainer.vue'
 export default {
+  components: {
+    CenterContainer,
+  },
   props: {
     task: {
       type: Object,

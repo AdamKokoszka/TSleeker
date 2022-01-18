@@ -4,7 +4,11 @@
   </div>
 </template>
 <script>
+import TaskEdit from '../tasks_components/single_task/TaskEdit.vue'
 export default {
+  components: {
+    TaskEdit,
+  },
   props: {
     canEdit: {
       type: Boolean,

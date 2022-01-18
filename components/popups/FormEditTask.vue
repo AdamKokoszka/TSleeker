@@ -72,7 +72,7 @@ export default {
         header: this.task.header,
         description: this.task.description,
         priority: this.task.priority,
-        end_date: '',
+        end_date: { nanoseconds: 0, seconds: 1640304000 },
         creator: this.$fire.auth.currentUser.email,
       },
       select_user: this.$store.getters.getUser.email,

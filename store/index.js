@@ -1,9 +1,14 @@
 // const state = () => ({
-//   user: null,
-//   tasks: [],
-//   permissions: '',
-//   members: [],
-//   adminsAccount: [],
+// user: null,
+// prevUser: null,
+// username: null,
+// tasks: [],
+// permissions: '',
+// members: [],
+// adminsAccount: [],
+// usersAccount: [],
+// currentTask: {},
+// currentEditTask: {},
 // })
 
 const getDefaultState = () => {
@@ -86,6 +91,9 @@ const mutations = {
   },
   setCurrentEditTask(state, currentEditTask) {
     state.currentEditTask = currentEditTask
+  },
+  setNewUser(state, data) {
+    this.$fire.firestore.collection('users').doc(data.email).set(data.userData)
   },
   resetState(state) {
     Object.assign(state, getDefaultState())

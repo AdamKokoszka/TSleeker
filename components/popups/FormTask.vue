@@ -56,7 +56,9 @@ export default {
         description: '',
         priority: false,
         end_date: '',
-        creator: this.$fire.auth.currentUser.email,
+        creator: this.$store.getters.getUser
+          ? this.$store.getters.getUser.email
+          : '',
       },
       select_user:
         this.$store.getters.getPermissions === 'user'

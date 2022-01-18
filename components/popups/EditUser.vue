@@ -14,7 +14,15 @@
   </div>
 </template>
 <script>
+import Popup from '../global_layouts/Popup.vue'
+import CenterContainer from '../global_layouts/CenterContainer.vue'
+import FormEditUser from '../popups/FormEditUser.vue'
 export default {
+  components: {
+    Popup,
+    CenterContainer,
+    FormEditUser,
+  },
   data() {
     return {
       showPopup: false,
