@@ -32,10 +32,6 @@ export default {
 </script>
 
 <style scoped>
-.box_con {
-  min-width: 400px;
-  width: 50%;
-}
 .white_con {
   background-color: #fff;
   display: block;
@@ -56,5 +52,10 @@ export default {
 .editor_con {
   max-height: 730px;
   overflow: auto;
+}
+@media screen and (max-width: 1023px) {
+  .editor_con {
+    max-height: 65vh;
+  }
 }
 </style>

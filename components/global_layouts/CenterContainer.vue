@@ -23,7 +23,6 @@ export default {
   position: relative;
   width: 400px;
   max-width: calc(100vw - 20px);
-  /* overflow: auto; */
   padding: 20px;
   background-color: var(--color-gray-light);
   border-radius: 20px;
@@ -32,16 +31,13 @@ export default {
   width: 1000px;
   min-width: inherit;
   max-width: calc(100vw - 20px);
-  max-height: calc(100% - 80px);
+  max-height: calc(100vh - 80px);
   margin-left: auto;
   margin-right: auto;
-  /* background-color: #fff; */
-  /* border: 3px solid var(--color-gray-light); */
 }
 .add_task {
   width: 1000px;
   max-height: calc(100% - 80px);
-  /* width: 50%; */
   margin-left: auto;
   margin-right: auto;
 }

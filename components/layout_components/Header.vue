@@ -189,16 +189,6 @@ export default {
   justify-content: flex-end;
   align-items: center;
 }
-/* .mobile_nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.63);
-  display: none;
-  z-index: 100000;
-} */
 .mobile_menu {
   display: none;
 }
@@ -220,9 +210,6 @@ export default {
     display: none;
   }
   .mobile_nav {
-    display: block;
-  }
-  .mobile_menu {
     display: block;
   }
   .mobile_menu {

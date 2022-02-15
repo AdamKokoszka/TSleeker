@@ -2,8 +2,8 @@ import { shallowMount } from '@vue/test-utils'
 
 import Popup from '@/components/global_layouts/Popup.vue'
 
-describe('CenterContainer', () => {
-  it('Add class: previewBox, addTask', async () => {
+describe('Popup', () => {
+  it('Popup is showing', async () => {
     const wrapper = shallowMount(Popup)
 
     expect(wrapper.find('.popup_bg').exists()).toBe(false)
