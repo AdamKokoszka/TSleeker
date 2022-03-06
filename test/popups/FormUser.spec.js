@@ -10,6 +10,7 @@ import FormUser from '@/components/popups/FormUser.vue'
 // jest.mock('firestore')
 // import Task from '@/components/tasks_components/single_task/Task.vue'
 
+require('dotenv').config()
 const localVue = createLocalVue()
 
 localVue.use(Vuex)
@@ -19,6 +20,8 @@ describe('Form User Methods', () => {
   let actions
   let store
 
+  const OLD_ENV = process.env
+
   beforeEach(() => {
     getters = {}
     actions = {}
@@ -26,6 +29,11 @@ describe('Form User Methods', () => {
       getters,
       actions,
     })
+    process.env = { ...OLD_ENV } // Make a copy
+  })
+
+  afterAll(() => {
+    process.env = OLD_ENV // Restore old environment
   })
 
   it('Add User - snackbarText', async () => {
@@ -67,9 +75,9 @@ describe('Form User Methods', () => {
       name: 'Testowanie aplikacji',
     }
     const secondConfig = {
-      apiKey: 'AIzaSyBNyrl-fCzYWBtjozf09TeSQGm4_auTcws',
-      authDomain: 'test-nuxt-auth-52d70.firebaseapp.com',
-      databaseURL: 'https://test-nuxt-auth-52d70-default-rtdb.firebaseio.com',
+      apiKey: process.env.APIKEY,
+      authDomain: process.env.AUTHDOMAIN,
+      databaseURL: process.env.DATABASEURL,
     }
     await wrapper.setData({ secondConfig })
 

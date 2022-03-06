@@ -28,9 +28,9 @@ export default {
   },
   env: {
     secondConfig: {
-      apiKey: 'AIzaSyBNyrl-fCzYWBtjozf09TeSQGm4_auTcws',
-      authDomain: 'test-nuxt-auth-52d70.firebaseapp.com',
-      databaseURL: 'https://test-nuxt-auth-52d70-default-rtdb.firebaseio.com',
+      apiKey: process.env.APIKEY,
+      authDomain: process.env.AUTHDOMAIN,
+      databaseURL: process.env.DATABASEURL,
     },
   },
 
@@ -77,12 +77,12 @@ export default {
       '@nuxtjs/firebase',
       {
         config: {
-          apiKey: 'AIzaSyBNyrl-fCzYWBtjozf09TeSQGm4_auTcws',
-          authDomain: 'test-nuxt-auth-52d70.firebaseapp.com',
-          projectId: 'test-nuxt-auth-52d70',
-          storageBucket: 'test-nuxt-auth-52d70.appspot.com',
-          messagingSenderId: '485227979417',
-          appId: '1:485227979417:web:d578182259643de9288e08',
+          apiKey: process.env.APIKEY,
+          authDomain: process.env.AUTHDOMAIN,
+          projectId: process.env.PROJECTID,
+          storageBucket: process.env.STORAGEBUCKET,
+          messagingSenderId: process.env.MESSAGINGSENDERID,
+          appId: process.env.APPID,
         },
         services: {
           firestore: true,
